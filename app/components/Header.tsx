@@ -93,7 +93,7 @@ function Header() {
         <ul className="md:flex gap-5 hidden ">
           {listItems.map((item, i) => (
 
-            <li className="cursor-pointer hover:opacity-70 transition list-none" key={item.href}>
+            <li className="cursor-pointer hover:opacity-70 transition list-none" key={item.href} >
               <Link href={item.href} >
                 {item.label}
               </Link>
@@ -124,7 +124,7 @@ function Header() {
             <div className="md:hidden flex flex-col gap-2">
               {listItems.map((item, i) => (
 
-                <li className="cursor-pointer hover:opacity-70 transition list-none " key={item.href}>
+                <li className="cursor-pointer hover:opacity-70 transition list-none " key={item.href} onClick={() => setIsMenuOpen(false)}>
                   <Link href={item.href} >
                     {item.label}
                   </Link>
@@ -133,12 +133,12 @@ function Header() {
               ))}
             </div>
             <div className="flex gap-2">
-              <Link href={'/login'}>
+              <Link href={'/login'} onClick={() => setIsMenuOpen(false)}>
                 <button className="px-4 cursor-pointer py-2 bg-[#3b3b34] rounded-lg text-sm hover:bg-[#5a5a52] transition">
                   تسجيل الدخول
                 </button>
               </Link>
-              <Link href={'/signup'}>
+              <Link href={'/signup'} onClick={() => setIsMenuOpen(false)}>
                 <button className="px-4 cursor-pointer py-2 bg-none border-2 border-[#e6d3a3] box-border rounded-lg text-sm hover:bg-[#5a5a52] transition">
                   إنشاء حساب
                 </button>

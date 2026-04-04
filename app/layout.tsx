@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
-import { Aref_Ruqaa } from "next/font/google"
+import { Aref_Ruqaa, Geist } from "next/font/google"
 import Footer from "./sections/Footer";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const arefRuqaa = Aref_Ruqaa({
   subsets: ["arabic"],
@@ -24,7 +27,7 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={` h-full antialiased ${arefRuqaa.className} `}
+      className={cn("h-full", "antialiased", arefRuqaa.className, "font-sans", geist.variable)}
     >
       
       <body className="min-h-full flex bg-[#1C1C18]  flex-col">

@@ -1,30 +1,32 @@
-import YearBox from "../components/YearBox"
+import YearBox from "../components/YearBox";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 function YearSec() {
     return (
-        <section className="flex flex-col gap-5 py-20">
-            <h1 className="text-6xl font-bold text-center mt-10 mb-5 text-[#E5E5E5]">
-                السنوات الدراسية
-            </h1>
+        <section className="w-full py-16 md:py-24 bg-[#e6d3a3]/5">
+            <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+                <h1 className="text-5xl md:text-6xl font-bold text-center mb-16 text-[#e6d3a3] leading-tight">
+                    السنوات الدراسية
+                </h1>
 
-            <div className="flex gap-10 overflow-x-auto lg:overflow-x-hidden max-w-full mx-auto p-5">
-
-                <div className="shrink-0 w-80">
-                    <YearBox year="اولى ثانوي" />
-                </div>
-
-                <div className="shrink-0 w-80">
-                    <YearBox year="تانية ثانوي" />
-                </div>
-
-                <div className="shrink-0 w-80">
-                    <YearBox year="ثالثة ثانوي" />
-                </div>
-
+                <ScrollArea className="w-full lg:w-11/12 mx-auto rounded-2xl border border-[#e6d3a3]/20 bg-[#e6d3a3]/10 backdrop-blur-md shadow-2xl hover:shadow-3xl transition-all duration-300">
+                    <div className="flex gap-6 md:gap-8 p-6 md:p-8 pb-6 md:pb-8">
+                        <div className="shrink-0">
+                            <YearBox year="اولى ثانوي" />
+                        </div>
+                        <div className="shrink-0">
+                            <YearBox year="تانية ثانوي" />
+                        </div>
+                        <div className="shrink-0">
+                            <YearBox year="ثالثة ثانوي" />
+                        </div>
+                    </div>
+                    <ScrollBar orientation="horizontal" className="[&amp;_track]:bg-[#e6d3a3]/20 [&amp;_thumb]:bg-[#e6d3a3]/70 hover:[&amp;_thumb]:bg-[#e6d3a3]/90 h-2 rounded-full transition-all duration-200" />
+                </ScrollArea>
             </div>
         </section>
     )
 }
 
+export default YearSec;
 
-export default YearSec

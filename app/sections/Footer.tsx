@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 function Footer() {
   return (
-    <section className="relative w-full min-h-[60vh] overflow-hidden flex items-center justify-center bg-[#1C1C18]">
+    <section className="relative w-full min-h-[60vh] overflow-hidden flex items-center justify-center bg-[#1C1C18] mt-20 rounded-t-3xl border-t-2 border-[#3b3b34]">
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image
