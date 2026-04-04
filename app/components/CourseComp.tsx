@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import Image from "next/image";
 function CourseComp() {
+
+    const courseImgStyle:CSSProperties = {
+        width: "100%",
+        overflow: "hidden"
+    };
+
     return (
         <div className='w-full flex flex-col text-right rounded bg-[#3b3b34]  '>
-            <Image src="/course-image.jpg" alt="Course Image" width={200} height={250} />
+            <Image src="/course-image.jpg" alt="Course Image" width={500} height={350} style={courseImgStyle}/>
             <div className='p-5'>
                 <h1 className='text-4xl font-bold  mt-10 mb-5 text-[#E5E5E5]'>
                     كورس الشهر الأول
