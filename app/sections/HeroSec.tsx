@@ -19,7 +19,7 @@ function HeroSec() {
         className="absolute -left-20 sm:-left-16 lg:-left-10 -top-32 sm:-top-20 lg:-top-10 w-[70%] sm:w-[50%] lg:w-[45%] h-full z-0"
       >
         <Image
-          src="https://21uczgvyfz.ufs.sh/f/Rj1B6NAFKq4JWudi86UZwpD9QO2LVemNYP3CUHgSflrdXk4s"
+          src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dp1shd90KwUDA5opdgTfPIL06ybWnh9ZEjYKxQ"
           alt="Left Statue"
           fill
           sizes="(max-width: 640px) 70vw, (max-width: 1024px) 50vw, 45vw"
@@ -36,7 +36,7 @@ function HeroSec() {
         className="absolute -right-20 sm:-right-16 lg:-right-10 -top-32 sm:-top-20 lg:-top-10 w-[70%] sm:w-[50%] lg:w-[45%] h-full z-0"
       >
         <Image
-          src="https://21uczgvyfz.ufs.sh/f/Rj1B6NAFKq4Jkmo2iDP7ugHIX10xPCSctVndRfl5WUJKqEay"
+          src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dp6oypcPXLHlyXdUMO8LsW2ihoY0mfVAbF6G3j"
           alt="Right Obelisk"
           fill
           sizes="(max-width: 640px) 70vw, (max-width: 1024px) 50vw, 45vw"

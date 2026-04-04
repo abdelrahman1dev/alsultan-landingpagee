@@ -9,7 +9,7 @@ function Footer() {
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image
-          src="https://21uczgvyfz.ufs.sh/f/Rj1B6NAFKq4J5SMArRdGVNl73MPCceKDB8ugaWsx9oiL0qwn"
+          src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dp3udS5UFh8G4vUARZfOExnz6iSHVg7sNj5hue"
           alt="Footer Background"
           fill
           className="object-cover object-center opacity-40"

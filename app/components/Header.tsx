@@ -81,7 +81,7 @@ function Header() {
       <nav className="flex justify-between items-center">
         <div className="absolute left-5 -top-10 pointer-events-none">
           <Image
-            src="https://21uczgvyfz.ufs.sh/f/Rj1B6NAFKq4JJb2A1UOXSAl4qxFGbfIn692juDCZ0W8J3TBH"
+            src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpVGUxsIyjrdms09WbDu2AhOYkEV4yUBfq3vpg"
             alt="Logo"
             width={50}
             height={50}
@@ -133,12 +133,17 @@ function Header() {
               ))}
             </div>
             <div className="flex gap-2">
-              <button className="px-4 cursor-pointer py-2 bg-[#3b3b34] rounded-lg text-sm hover:bg-[#5a5a52] transition">
-                تسجيل الدخول
-              </button>
-              <button className="px-4 cursor-pointer py-2 bg-none border-2 border-[#e6d3a3] box-border rounded-lg text-sm hover:bg-[#5a5a52] transition">
-                إنشاء حساب
-              </button>
+              <Link href={'/login'}>
+                <button className="px-4 cursor-pointer py-2 bg-[#3b3b34] rounded-lg text-sm hover:bg-[#5a5a52] transition">
+                  تسجيل الدخول
+                </button>
+              </Link>
+              <Link href={'/signup'}>
+                <button className="px-4 cursor-pointer py-2 bg-none border-2 border-[#e6d3a3] box-border rounded-lg text-sm hover:bg-[#5a5a52] transition">
+                  إنشاء حساب
+                </button>
+              </Link>
+
             </div>
 
 
