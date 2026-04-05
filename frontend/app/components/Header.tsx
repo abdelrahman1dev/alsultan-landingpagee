@@ -44,7 +44,7 @@ const listItems = [
   },
   {
     label: "الدروس",
-    href: "/lessons",
+    href: "/courses",
   },
 ]
 

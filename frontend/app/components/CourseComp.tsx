@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from "next/image";
+import Link from "next/link";
 
 function CourseComp() {
     return (
@@ -21,9 +22,11 @@ function CourseComp() {
                 <p className="text-2xl font-bold text-white mb-6">
                     150 جنيه
                 </p>
-                <button className="w-full px-6 py-4 rounded-xl text-xl font-semibold bg-[#e6d3a3] hover:bg-[#d4c38c] text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <Link href={'/courses'}>
+                  <button className="w-full px-6 mb-5 py-4 rounded-xl text-xl font-semibold bg-[#e6d3a3] hover:bg-[#d4c38c] text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer">
                     اشترك الآن
                 </button>
+                </Link>
                 <div className="flex flex-wrap gap-3">
                     <span className="bg-[#e6d3a3]/10 backdrop-blur-md text-[#e6d3a3] border border-[#e6d3a3]/30 px-4 py-2 rounded-full text-sm font-medium hover:bg-[#e6d3a3]/20 hover:scale-105 transition-all duration-200">
                         تاريخ مصري

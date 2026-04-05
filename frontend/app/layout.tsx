@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { Aref_Ruqaa, Geist } from "next/font/google"
 import Footer from "./sections/Footer";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner"
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -31,6 +32,7 @@ export default function RootLayout({
     >
       
       <body className="min-h-full flex bg-[#1C1C18]  flex-col">
+        <Toaster richColors position="top-right" />
         <Header />
         {children}
         <Footer />

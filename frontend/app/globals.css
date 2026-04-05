@@ -142,3 +142,20 @@ img {
 button , a {
   @apply  cursor-pointer;
 }
+
+
+.phone-input {
+  @apply flex items-center w-full rounded-lg border-2 border-[#e6d3a3] bg-[#1C1C18];
+}
+
+.phone-input input {
+  @apply bg-transparent text-[#e6d3a3] outline-none w-full p-2;
+}
+
+.phone-input select {
+  @apply bg-[#1C1C18] text-[#e6d3a3];
+}
+
+form div p {
+  @apply text-red-500 mt-1 text-sm;
+}
