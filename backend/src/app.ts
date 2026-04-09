@@ -1,7 +1,15 @@
-import express, { type Request, type Response } from 'express';
+import express, { type Request, type Response } from 'express'
+import cors from 'cors'
+
 import db, {getImageLink} from './database.ts'
 
 const app = express();
+
+const corsOptions = {
+  origin:'*'
+};
+
+app.use(cors(corsOptions));
 
 // Routes
 app.route('/images/:imageName').get(async (req: Request<{imageName: string}>, res: Response) => {
