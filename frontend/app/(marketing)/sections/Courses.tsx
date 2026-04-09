@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import CourseComp from '../components/CourseComp';
+import CourseComp from '../../components/CourseComp';
 
-import { API_URL } from '../config/config';
+import { API_URL } from '../../config/config';
 
 export default function Courses() {
   const [courseImg, setCourseImg] = useState<string | null>(null);

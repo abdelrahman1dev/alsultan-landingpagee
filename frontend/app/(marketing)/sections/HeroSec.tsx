@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-// ✅ Disable SSR for Lottie (important)
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 function HeroSec() {
@@ -68,7 +67,7 @@ function HeroSec() {
       {/* LOTTIE ANIMATION */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
         <Lottie
-          animationData={require('../../public/scrolldown.json')}
+          animationData={require('../../../public/scrolldown.json')}
           loop
           autoplay
           style={{ width: 50, height: 50 }}

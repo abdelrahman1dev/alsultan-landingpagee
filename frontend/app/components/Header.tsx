@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { Menu, Origami } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const dropdownVariants: Variants = {
@@ -50,6 +51,8 @@ const listItems = [
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const path = usePathname();
+  const isUserPage = path.startsWith('/user');
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -74,76 +77,81 @@ function Header() {
   };
 
   return (
-    <header className="fixed translate-x-1/2 right-1/2  fi z-100 w-[70%] mx-auto p-3 mt-8  shadow-2xl shadow-black border-2 border-[#3b3b34] text-[#e6d3a3] bg-[#1C1C18] rounded-3xl">
-      <nav className="flex justify-between items-center">
-        <div className="absolute left-5 -top-10 pointer-events-none">
-          <Image
-            src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpVGUxsIyjrdms09WbDu2AhOYkEV4yUBfq3vpg"
-            alt="Logo"
-            width={50}
-            height={50}
-          />
-        </div>
+    <>
+      {!isUserPage && (
+        <header className="fixed translate-x-1/2 right-1/2  fi z-100 w-[70%] mx-auto p-3 mt-8  shadow-2xl shadow-black border-2 border-[#3b3b34] text-[#e6d3a3] bg-[#1C1C18] rounded-3xl">
+          <nav className="flex justify-between items-center">
+            <div className="absolute left-5 -top-10 pointer-events-none">
+              <Image
+                src="https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpVGUxsIyjrdms09WbDu2AhOYkEV4yUBfq3vpg"
+                alt="Logo"
+                width={50}
+                height={50}
+              />
+            </div>
 
-        <Link href={'/'} className="flex items-center gap-2">
-          <Origami />
-        </Link>
+            <Link href={'/'} className="flex items-center gap-2">
+              <Origami />
+            </Link>
 
-        <ul className="md:flex gap-5 hidden ">
-          {listItems.map((item, i) => (
-            <li
-              className="cursor-pointer hover:opacity-70 transition list-none"
-              key={item.href}
-            >
-              <Link href={item.href}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
-
-        <button onClick={toggleMenu}>
-          <Menu />
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            key="dropdown"
-            ref={menuRef}
-            variants={dropdownVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="flex flex-col text-center gap-3 absolute -left-2 top-20 bg-[#1C1C18] p-3 rounded-lg shadow-lg border-2 border-[#3b3b34] before:absolute before:-top-2 before:left-5 before:w-4 before:h-4 before:bg-[#1C1C18] before:rotate-45 before:border-t-2 before:border-l-2 before:border-[#3b3b34]"
-          >
-            <div className="md:hidden flex flex-col gap-2">
+            <ul className="md:flex gap-5 hidden ">
               {listItems.map((item, i) => (
                 <li
-                  className="cursor-pointer hover:opacity-70 transition list-none "
+                  className="cursor-pointer hover:opacity-70 transition list-none"
                   key={item.href}
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   <Link href={item.href}>{item.label}</Link>
                 </li>
               ))}
-            </div>
-            <div className="flex gap-2">
-              <Link href={'/login'} onClick={() => setIsMenuOpen(false)}>
-                <button className="px-4 cursor-pointer py-2 bg-[#3b3b34] rounded-lg text-sm hover:bg-[#5a5a52] transition">
-                  تسجيل الدخول
-                </button>
-              </Link>
-              <Link href={'/signup'} onClick={() => setIsMenuOpen(false)}>
-                <button className="px-4 cursor-pointer py-2 bg-none border-2 border-[#e6d3a3] box-border rounded-lg text-sm hover:bg-[#5a5a52] transition">
-                  إنشاء حساب
-                </button>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+            </ul>
+
+            <button onClick={toggleMenu}>
+              <Menu />
+            </button>
+          </nav>
+
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                key="dropdown"
+                ref={menuRef}
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="flex flex-col text-center gap-3 absolute -left-2 top-20 bg-[#1C1C18] p-3 rounded-lg shadow-lg border-2 border-[#3b3b34] before:absolute before:-top-2 before:left-5 before:w-4 before:h-4 before:bg-[#1C1C18] before:rotate-45 before:border-t-2 before:border-l-2 before:border-[#3b3b34]"
+              >
+                <div className="md:hidden flex flex-col gap-2">
+                  {listItems.map((item, i) => (
+                    <li
+                      className="cursor-pointer hover:opacity-70 transition list-none "
+                      key={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link href={item.href}>{item.label}</Link>
+                    </li>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <Link href={'/login'} onClick={() => setIsMenuOpen(false)}>
+                    <button className="px-4 cursor-pointer py-2 bg-[#3b3b34] rounded-lg text-sm hover:bg-[#5a5a52] transition">
+                      تسجيل الدخول
+                    </button>
+                  </Link>
+                  <Link href={'/signup'} onClick={() => setIsMenuOpen(false)}>
+                    <button className="px-4 cursor-pointer py-2 bg-none border-2 border-[#e6d3a3] box-border rounded-lg text-sm hover:bg-[#5a5a52] transition">
+                      إنشاء حساب
+                    </button>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </header>
+      )}
+    </>
   );
 }
+
 
 export default Header;

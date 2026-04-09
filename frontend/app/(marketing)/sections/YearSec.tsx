@@ -1,9 +1,12 @@
-import YearBox from '../components/YearBox';
-import { ScrollArea, ScrollBar } from '../../ui/scroll-area';
+import YearBox from '../../components/YearBox';
+import { ScrollArea, ScrollBar } from '../../../ui/scroll-area';
 
 function YearSec() {
   return (
-    <section className="w-full py-16 md:py-24 bg-[#e6d3a3]/5">
+    <section className="w-full relative bg-[#0d0d0d] py-16 md:py-24 ">
+      <div className="absolute left-0 top-0 h-full w-24 md:w-32 bg-linear-to-r from-[#0d0d0d] to-transparent z-20 pointer-events-none" />
+      <div className="absolute right-0 top-0 h-full w-24 md:w-32 bg-linear-to-l from-[#0d0d0d] to-transparent z-20 pointer-events-none" />
+
       <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         <h1 className="text-5xl md:text-6xl font-bold text-center mb-16 text-[#e6d3a3] leading-tight">
           السنوات الدراسية

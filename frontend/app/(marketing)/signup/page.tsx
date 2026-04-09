@@ -26,7 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Toast } from 'radix-ui';
 import { request } from 'node:https';
 
-import { API_URL } from '../config/config';
+import { API_URL } from '../../config/config';
 
 const cairo = Cairo({ subsets: ['arabic'], weight: ['400', '700'] });
 
@@ -270,8 +270,6 @@ function Page() {
 export default Page;
 
 function YearCombo({
-  year,
-  specialize,
   onYearchange,
   onSpecializationChange,
 }: {
@@ -284,6 +282,11 @@ function YearCombo({
   const specializations = ['علمي علوم', 'علمي رياضة', 'ادبي'];
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState('');
+
+
+  useEffect(() => {
+  onSpecializationChange(selectedSpecialization);
+}, [selectedSpecialization]);
 
   return (
     <div className="flex gap-5 items-center justify-center">
@@ -326,10 +329,10 @@ function YearCombo({
               {specializations.map((spec) => (
                 <ComboboxItem
                   key={spec}
-                  value={selectedSpecialization}
+                  value={spec}
                   onClick={() => {
                     setSelectedSpecialization(spec);
-                    onSpecializationChange(selectedSpecialization.toString());
+                    
                   }}
                   className="px-3 py-2 cursor-pointer text-white hover:bg-[#2a2a25] transition-colors rounded"
                 >
@@ -345,7 +348,6 @@ function YearCombo({
 }
 
 function GovCombo({
-  value,
   onChange,
 }: {
   value: string;

@@ -68,9 +68,6 @@ function MarqueeRow({
 
       <motion.div
         className="flex flex-nowrap gap-6 pr-6"
-        // FIXED: Only one animate prop.
-        // We move -33.33% because the array is tripled; this resets the position
-        // to the start of the next identical set of cards.
         animate={{ x: reverse ? ['-33.33%', '0%'] : ['0%', '-33.33%'] }}
         transition={{
           duration: duration,
