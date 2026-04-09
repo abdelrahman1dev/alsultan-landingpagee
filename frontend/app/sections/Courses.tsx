@@ -1,8 +1,28 @@
-import React from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react'
 import CourseComp from '../components/CourseComp'
 
 
 export default function Courses() {
+  const [courseImg, setCourseImg] = useState<string | undefined>();
+
+  useEffect(() => {
+    async function getCourseImg() {
+      try {
+          const response = await fetch("http://localhost:5000/images/course_image");
+          const data = await response.json();
+
+          setCourseImg(data["imageUrl"]);
+      } 
+      catch (err) {
+          console.error(err);
+      }
+    }
+
+    getCourseImg();
+  });
+
   return (
     <section className='w-full min-h-screen flex mt-20 flex-col gap-20 p-5 items-center justify-center'> 
     <h1 className='text-6xl font-bold text-center mt-10 mb-5 text-[#E5E5E5]'>
