@@ -77,7 +77,7 @@ function Page() {
 
     try {
       const res = await fetch(`${API_URL}/signup`, {
-                                        method: 'POST',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
