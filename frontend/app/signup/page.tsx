@@ -25,6 +25,9 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Toast } from "radix-ui";
+import { request } from "node:https";
+
+import { API_URL } from '../config/config'
 
 
 const cairo = Cairo({ subsets: ["arabic"], weight: ["400", "700"] });
@@ -87,12 +90,28 @@ function Page() {
 
 
 
-    const onsubmit = (data: Infer) => {
+    const onsubmit = async (data: Infer) => {
         console.log('valid data', data);
-        toast.success("تم إنشاء الحساب بنجاح!");
+        
+        try {
+            const res = await fetch(`${API_URL}/signup`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
+            if (!res.ok) {
+                throw new Error(`Request Failed: ${res.status}`);
+            }
 
-
+            toast.success("تم إنشاء الحساب بنجاح!");
+        }
+        catch (err) {
+            console.error(err);
+            toast.error("حدث خطأ اثناء انشاء الحساب");
+        }
     };
 
 

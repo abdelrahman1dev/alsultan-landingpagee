@@ -1,5 +1,7 @@
 import express, { type Request, type Response } from 'express'
+import bodyParser from 'body-parser'
 import cors from 'cors'
+import fs from 'fs/promises'
 
 import db, {getImageLink} from './database.ts'
 
@@ -33,5 +35,11 @@ app.route('/images/:imageName').get(async (req: Request<{imageName: string}>, re
     res.status(500).send();
   }
 });
+
+app.route('/signup').post(bodyParser.json(), async (req: Request, res: Response) => {
+//  await fs.writeFile("bodyDebug.txt", JSON.stringify(req.body));
+
+  res.status(200).send();
+})
 
 export default app;
