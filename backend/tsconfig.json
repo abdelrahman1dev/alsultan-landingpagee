@@ -17,6 +17,9 @@
     "verbatimModuleSyntax": false,
 
     "isolatedModules": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true
   }
 }
