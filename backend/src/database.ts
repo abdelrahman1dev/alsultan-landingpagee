@@ -51,8 +51,22 @@ export async function getUserByEmail(email: string) : Promise<User | null> {
   }
 
   const row = res.rows[0];
+  if (!row) {
+    return null;
+  }
 
-  return row ?? null;
+  const user: User = {
+    email: row.email,
+    passwordHash: row.password,
+    specialization: row.specialization,
+    governorate: row.governorate,
+    parentPhone: row.parent_phone,
+    studentPhone: row.student_phone,
+    year: row.year,
+    name: row.name
+  };
+
+  return user;
 }
 
 export async function insertUser(user: User) {
