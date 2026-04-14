@@ -5,7 +5,7 @@ import { Menu, BellRing, X, EllipsisVertical } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 const navItems = [
-    { name: "الرئيسية", href: "/user/dashboard" },
+    { name: "الرئيسية", href: "/user/dashboard"  },
     { name: "الملف الشخصي", href: "/user/profile" },
     { name: "الدروس", href: "/user/courses" },
     { name: "المحفظة", href: "/user/wallet" },
@@ -39,7 +39,7 @@ function SideNav() {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="fixed right-0 top-0 w-64 h-screen bg-[#1C1C18] text-[#e6d3a3] p-4 border-2 border-[#3b3b34]/50 hidden lg:block shadow-sm shadow-[#e6d3a3]/20">
+            <aside className="fixed lg:static  lg:block right-0 top-0 w-64 h-screen bg-[#1C1C18] text-[#e6d3a3] p-4 border-2 border-[#3b3b34]/50 hidden  shadow-sm shadow-[#e6d3a3]/20">
                 <nav>
                     <ul className="space-y-4">
                         {navItems.map((item) => (

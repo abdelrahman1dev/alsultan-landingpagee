@@ -5,7 +5,7 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className='min-h-screen flex flex-col relative items-center justify-center bg-white/5 text-white'>
+        <div className='min-h-screen flex relative items-center justify-center bg-[#0d0d0d] text-white'>
             <SideNav />
             {children}
         </div>

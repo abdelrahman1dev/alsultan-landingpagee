@@ -1,6 +1,11 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Cairo } from 'next/font/google';
+import { FormEvent } from 'react';
+import {toast} from 'sonner'; 
+import { API_URL } from '@/app/config/config';
 
 const cairo = Cairo({
   subsets: ['arabic'],
@@ -8,6 +13,48 @@ const cairo = Cairo({
 });
 
 function page() {
+
+
+
+  const onsubmit = async (e: FormEvent<HTMLFormElement>) => {
+
+    e.preventDefault();
+    const data = new FormData(e.target as HTMLFormElement);
+    const payload = {
+      email: data.get('email') as string,
+      password: data.get('password') as string,
+    };
+
+  
+
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      
+     
+
+      if (!res.ok) {
+        console.log(JSON.stringify(res.body));
+       
+        throw new Error(`Request Failed: ${res.status}`);
+        
+      }
+
+      toast.success('تم الدخول بنجاح!');
+    } catch (err) {
+      console.error(err);
+      toast.error('حدث خطأ أثناء الدخول');
+    }
+  };
+
+
+
+
   return (
     <section className="w-full min-h-screen flex flex-row-reverse gap-10 lg:gap-20 p-5 items-center justify-center ">
       <div className="left-sec w-full bg-[#1C1C18] p-6 rounded-lg shadow-sm shadow-[#e6d3a3] border-2 border-[#e6d3a3] gap-10 flex flex-col text-cemter ">
@@ -15,8 +62,7 @@ function page() {
           تسجيل الدخول
         </h1>
         <form
-          action="/login"
-          method="POST"
+          onSubmit={onsubmit}
           className={`w-full ${cairo.className}`}
         >
           <div className="mb-4">
@@ -49,7 +95,7 @@ function page() {
           </div>
           <button
             type="submit"
-            className="bg-[#e6d3a3] w-full text-[#1C1C18] rounded-lg font-bold py-2 px-4 rounded-lg hover:bg-[#d4c090] transition duration-200"
+            className="bg-[#e6d3a3] w-full text-[#1C1C18] rounded-lg font-bold py-2 px-4  hover:bg-[#d4c090] transition duration-200"
           >
             تسجيل الدخول
           </button>
