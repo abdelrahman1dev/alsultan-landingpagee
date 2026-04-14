@@ -1,5 +1,8 @@
 import 'dotenv/config';
 import { Pool } from 'pg';
+import z from 'zod';
+
+import * as validation from './validation.ts'
 
 export class DataIntegrityError extends Error {
   constructor(message: string) {
@@ -22,6 +25,8 @@ const db = new Pool({
   port: Number(process.env.DB_PORT),
 });
 
+export type User = z.infer<typeof validation.userSchema>;
+
 export async function getImageLink(name: string): Promise<string | null> {
   const query = 'SELECT * FROM image_links WHERE name = $1';
   const values = [name];
@@ -36,7 +41,7 @@ export async function getImageLink(name: string): Promise<string | null> {
   return row?.link ?? null;
 }
 
-export async function getUserByEmail(email: string) : Promise<Object | null> {
+export async function getUserByEmail(email: string) : Promise<User | null> {
   const query = 'SELECT * FROM users WHERE email = $1';
   const values = [email];
 
@@ -50,22 +55,11 @@ export async function getUserByEmail(email: string) : Promise<Object | null> {
   return row ?? null;
 }
 
-export type User = {
-  email: string;
-  name: string;
-  studentPhone: string;
-  parentPhone: string;
-  specialization: string;
-  governorate: string;
-  year: string;
-  password: string; // hashed
-};
-
 export async function insertUser(user: User) {
   const query = `INSERT INTO users(name, email, password, student_phone, parent_phone, year, governorate)
                  VALUES($1, $2, $3, $4, $5, $6, $7)`;
   const values = [
-    user.name, user.email, user.password, user.studentPhone, user.parentPhone, user.year, user.governorate
+    user.name, user.email, user.passwordHash, user.studentPhone, user.parentPhone, user.year, user.governorate
   ];
 
   await db.query(query, values);

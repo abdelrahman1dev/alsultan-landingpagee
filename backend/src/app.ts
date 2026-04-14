@@ -63,7 +63,7 @@ app
         return;
       }
 
-      const password = await hashPassword(data.password);
+      const passwordHash = await hashPassword(data.password);
       const user: User = {
         email: data.email,
         name: data.name,
@@ -72,7 +72,7 @@ app
         specialization: data.specialization,
         governorate: data.governorate,
         year: data.YearCombo,
-        password: password
+        passwordHash: passwordHash
       };
 
       insertUser(user);
