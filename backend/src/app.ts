@@ -97,7 +97,7 @@ app
       const data = req.body;
       validation.loginSchema.parse(data);
 
-      const existingUser = await getUserByEmail(data.email);
+      const existingUser: User | null = await getUserByEmail(data.email);
       if (!existingUser) {
         res.status(404).json({
           'message': 'User does not exist'
