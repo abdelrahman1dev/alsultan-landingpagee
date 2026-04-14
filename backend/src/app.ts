@@ -4,7 +4,7 @@ import cors from 'cors';
 import fs from 'fs/promises';
 import z from 'zod';
 
-import { hashPassword } from './hash.ts'
+import { hashPassword, verifyPassword } from './hash.ts'
 import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
 import * as validation from './validation.ts'
 
@@ -107,8 +107,7 @@ app
         return;
       }
 
-      const passwordHash = await hashPassword(data.password);
-      if (passwordHash !== existingUser.passwordHash) {
+      if (await verifyPassword(existingUser.passwordHash, data.password) == false) {
         res.status(400).json({
           'message': 'Incorrect password'
         });
