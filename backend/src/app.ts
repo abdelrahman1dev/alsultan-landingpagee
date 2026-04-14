@@ -1,5 +1,4 @@
 import express, { type Request, type Response } from 'express';
-import session from 'express-session'
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import fs from 'fs/promises';
