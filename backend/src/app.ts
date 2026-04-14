@@ -59,8 +59,6 @@ app
         res.status(400).json({
           'message': 'User already exists'
         });
-
-        res.send();
         return;
       }
 
@@ -104,7 +102,6 @@ app
         res.status(404).json({
           'message': 'User does not exist'
         });
-        res.send();
         return;
       }
 
@@ -112,7 +109,6 @@ app
         res.status(400).json({
           'message': 'Incorrect password'
         });
-        res.send();
         return;
       }
     }
@@ -121,7 +117,6 @@ app
         res.status(400).json({
           'message': 'Invalid login data'
         });
-        res.send();
         return;
       }
       else {
