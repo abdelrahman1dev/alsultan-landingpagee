@@ -3,9 +3,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import fs from 'fs/promises';
 import z from 'zod';
-import { hashPassword } from './hash.ts'
 
+import { hashPassword } from './hash.ts'
 import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
+import * as validation from './validation.ts'
 
 const app = express();
 
@@ -27,12 +28,14 @@ app
           message: 'Found image',
           imageUrl: result,
         });
-      } else {
+      } 
+      else {
         res.status(404).json({
           message: 'Image not found',
         });
       }
-    } catch (err) {
+    } 
+    catch (err) {
       console.log(err);
       res.status(500).send();
     }
@@ -46,27 +49,9 @@ app
       return;
     }
 
-    const signupSchema = z.object({
-      email: z.email(),
-      name: z.string().min(2, "Name is too short."),
-      studentPhone: z.string().trim().regex(/^\+201[0125]\d{8}$/, "Invalid egyptian mobile phone number."),
-      parentPhone: z.string().trim().regex(/^\+201[0125]\d{8}$/, "Invalid egyptian mobile phone number."),
-      specialization: z.string().optional(),
-      governorate: z.string("Governorate must be picked."),
-      YearCombo: z.string("School Year must be picked."),
-      password: z.string().min(6, "Password is too short."),
-      confirmPassword: z.string().min(6, "Password is too short.")
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      error: "Password confirmation doesn't match."
-    })
-    .refine((data) => data.studentPhone !== data.parentPhone, {
-      error: "Student and parent phone numbers must differ."
-    });
-
     try {
       const data = req.body;
-      signupSchema.parse(data);
+      validation.signupSchema.parse(data);
 
       const existingUser = await getUserByEmail(data.email);
       if (existingUser) {
