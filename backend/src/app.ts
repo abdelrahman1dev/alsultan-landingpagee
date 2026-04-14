@@ -97,6 +97,23 @@ app
     try {
       const data = req.body;
       validation.loginSchema.parse(data);
+
+      const existingUser = await getUserByEmail(data.email);
+      if (!existingUser) {
+        res.status(400).json({
+          'message': 'User does not exist'
+        });
+        res.send();
+        return;
+      }
+
+      const passwordHash = await hashPassword(data.password);
+      if (passwordHash !== existingUser.passwordHash) {
+        res.status(400).json({
+          'message': 'Incorrect password'
+        });
+        res.send();
+        return;
       }
     }
     catch (err) {
