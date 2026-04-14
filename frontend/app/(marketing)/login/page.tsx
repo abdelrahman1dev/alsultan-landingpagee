@@ -39,9 +39,7 @@ function page() {
      
 
       if (!res.ok) {
-        console.log(JSON.stringify(res.body));
-       
-        throw new Error(`Request Failed: ${res.status}`);
+        throw new Error(`Request Failed: ${res.status} ${JSON.stringify(await res.json())}`);
         
       }
 
