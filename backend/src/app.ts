@@ -86,4 +86,26 @@ app
     res.status(200).send();
   });
 
+app
+  .route('/login')
+  .post(bodyParser.json(), async (req: Request, res: Response) => {
+    if (!req.is('application/json')) {
+      res.status(415).send();
+      return;
+    }
+
+    try {
+      const data = req.body;
+      validation.loginSchema.parse(data);
+      }
+    }
+    catch (err) {
+      console.log(err);
+      res.status(415).send();
+      return;
+    }
+
+    res.status(200).send();
+  })
+
 export default app;
