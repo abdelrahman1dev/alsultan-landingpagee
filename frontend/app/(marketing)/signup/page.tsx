@@ -26,7 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Toast } from 'radix-ui';
 import { request } from 'node:https';
 
-import { API_URL } from '../../config/config';
+import { api } from "../hooks/api"
 
 const cairo = Cairo({ subsets: ['arabic'], weight: ['400', '700'] });
 
@@ -76,17 +76,7 @@ function Page() {
     console.log('valid data', data);
 
     try {
-      const res = await fetch(`${API_URL}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Request Failed: ${res.status}`);
-      }
+      const res = await api.post('/signup', data);
 
       toast.success('تم إنشاء الحساب بنجاح!');
     } catch (err) {

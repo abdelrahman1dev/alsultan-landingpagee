@@ -4,8 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Cairo } from 'next/font/google';
 import { FormEvent } from 'react';
-import {toast} from 'sonner'; 
-import { API_URL } from '@/app/config/config';
+import { toast } from 'sonner';
+import { api } from "../hooks/api"
+import { useRouter } from 'next/navigation';
 
 const cairo = Cairo({
   subsets: ['arabic'],
@@ -14,6 +15,7 @@ const cairo = Cairo({
 
 function page() {
 
+  const router = useRouter();
 
 
   const onsubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -25,29 +27,23 @@ function page() {
       password: data.get('password') as string,
     };
 
-  
+
 
     try {
-      const res = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-      
-     
-
-      if (!res.ok) {
-        throw new Error(`Request Failed: ${res.status} ${JSON.stringify(await res.json())}`);
-        
-      }
+      const res = await api.post('/login', payload)
 
       toast.success('تم الدخول بنجاح!');
-    } catch (err) {
+
+      router.push('/user');
+    } catch (err: any) {
       console.error(err);
-      toast.error('حدث خطأ أثناء الدخول');
+
+      const message =
+        err.response?.data?.message || 'حدث خطأ أثناء الدخول';
+
+      toast.error(message);
     }
+     
   };
 
 
