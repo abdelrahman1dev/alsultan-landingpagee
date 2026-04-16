@@ -5,13 +5,17 @@ import fs from 'fs/promises';
 import z, { ZodError } from 'zod';
 
 import { hashPassword, verifyPassword } from './hash.ts'
-import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
+import db, { getImageLink, getUserByEmail, insertUser, type User } from './database.ts';
 import * as validation from './validation.ts'
 
 const app = express();
 
+
+
+
 const corsOptions = {
-  origin: '*',
+  origin: 'https://alsultan-landingpagee.vercel.app/',
+  credentials: true
 };
 
 app.use(cors(corsOptions));
@@ -28,13 +32,13 @@ app
           message: 'Found image',
           imageUrl: result,
         });
-      } 
+      }
       else {
         res.status(404).json({
           message: 'Image not found',
         });
       }
-    } 
+    }
     catch (err) {
       console.log(err);
       res.status(500).send();
@@ -74,7 +78,7 @@ app
       };
 
       insertUser(user);
-    } 
+    }
     catch (err) {
       console.log(err);
       res.status(400).send();
