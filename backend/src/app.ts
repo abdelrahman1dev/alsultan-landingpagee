@@ -14,8 +14,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: 'https://alsultan-landingpagee.vercel.app/',
-  credentials: true
+  origin: "*",
 };
 
 app.use(cors(corsOptions));
