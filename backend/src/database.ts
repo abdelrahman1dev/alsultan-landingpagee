@@ -56,6 +56,7 @@ export async function getUserByEmail(email: string) : Promise<User | null> {
   }
 
   const user: User = {
+    id: row.id,
     email: row.email,
     passwordHash: row.password,
     specialization: row.specialization,

@@ -5,19 +5,17 @@ import fs from 'fs/promises';
 import z, { ZodError } from 'zod';
 
 import { hashPassword, verifyPassword } from './hash.ts'
-import db, { getImageLink, getUserByEmail, insertUser, type User } from './database.ts';
+import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
 import * as validation from './validation.ts'
+import { sessionObject } from './session.ts'
 
 const app = express();
 
-
-
-
-const corsOptions = {
-  origin: "*",
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true 
+}));
+app.use(sessionObject);
 
 // Routes
 app
@@ -31,18 +29,26 @@ app
           message: 'Found image',
           imageUrl: result,
         });
-      }
+      } 
       else {
         res.status(404).json({
           message: 'Image not found',
         });
       }
-    }
+    } 
     catch (err) {
       console.log(err);
       res.status(500).send();
     }
   });
+
+app
+  .route('/me')
+  .get(async (req: Request, res: Response) => {
+    res.status(200).json({
+      'sessionData': req.session.user || 'No session'
+    });
+  })
 
 app
   .route('/signup')
@@ -66,6 +72,7 @@ app
 
       const passwordHash = await hashPassword(data.password);
       const user: User = {
+        id: -1, // Doesn't matter, database creates the id
         email: data.email,
         name: data.name,
         studentPhone: data.studentPhone,
@@ -77,7 +84,7 @@ app
       };
 
       insertUser(user);
-    }
+    } 
     catch (err) {
       console.log(err);
       res.status(400).send();
@@ -95,24 +102,35 @@ app
       return;
     }
 
+    if (req.session.user) {
+      res.status(400).json({
+        'message': 'User is already logged in'
+      });
+      return;
+    }
+
     try {
       const data = req.body;
       validation.loginSchema.parse(data);
 
-      const existingUser: User | null = await getUserByEmail(data.email);
-      if (!existingUser) {
+      const user: User | null = await getUserByEmail(data.email);
+      if (!user) {
         res.status(404).json({
           'message': 'User does not exist'
         });
         return;
       }
 
-      if (await verifyPassword(existingUser.passwordHash, data.password) == false) {
+      if (await verifyPassword(user.passwordHash, data.password) == false) {
         res.status(400).json({
           'message': 'Incorrect password'
         });
         return;
       }
+
+      req.session.user = {
+        id: user.id
+      };
     }
     catch (err) {
       if (err instanceof ZodError) {
