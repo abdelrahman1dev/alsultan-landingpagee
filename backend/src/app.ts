@@ -1,5 +1,4 @@
 import express, { type Request, type Response } from 'express';
-import session from 'express-session'
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import fs from 'fs/promises';
@@ -8,16 +7,7 @@ import z, { ZodError } from 'zod';
 import { hashPassword, verifyPassword } from './hash.ts'
 import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
 import * as validation from './validation.ts'
-
-type UserSessionData = {
-  id: number
-};
-
-declare module 'express-session' {
-  interface SessionData {
-    user: UserSessionData;
-  }
-}
+import { sessionObject } from './session.ts'
 
 const app = express();
 
@@ -28,15 +18,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-if (!process.env.SESSION_KEY) {
-  throw new Error("FATAL ERROR: SESSION_KEY is not defined in .env");
-}
-
-app.use(session({
-  secret: process.env.SESSION_KEY,
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(sessionObject);
 
 // Routes
 app
