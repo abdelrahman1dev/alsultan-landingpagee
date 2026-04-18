@@ -46,7 +46,7 @@ app
   .route('/me')
   .get(async (req: Request, res: Response) => {
     res.status(200).json({
-      'sessionID': req.session.user || 'No session'
+      'sessionData': req.session.user || 'No session'
     });
   })
 
