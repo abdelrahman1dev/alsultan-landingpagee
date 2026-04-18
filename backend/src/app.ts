@@ -9,13 +9,30 @@ import { hashPassword, verifyPassword } from './hash.ts'
 import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
 import * as validation from './validation.ts'
 
+declare module 'express-session' {
+  interface SessionData {
+    user: string;
+  }
+}
+
 const app = express();
 
 const corsOptions = {
-  origin: '*',
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
 };
 
 app.use(cors(corsOptions));
+
+if (!process.env.SESSION_KEY) {
+  throw new Error("FATAL ERROR: SESSION_KEY is not defined in .env");
+}
+
+app.use(session({
+  secret: process.env.SESSION_KEY,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Routes
 app
@@ -41,6 +58,14 @@ app
       res.status(500).send();
     }
   });
+
+app
+  .route('/me')
+  .get(async (req: Request, res: Response) => {
+    res.status(200).json({
+      'sessionID': req.session.user || 'No session'
+    });
+  })
 
 app
   .route('/signup')
@@ -93,6 +118,15 @@ app
       return;
     }
 
+    console.log(req.session.user);
+
+    if (req.session.user) {
+      res.status(400).json({
+        'message': 'User is already logged in'
+      });
+      return;
+    }
+
     try {
       const data = req.body;
       validation.loginSchema.parse(data);
@@ -111,6 +145,8 @@ app
         });
         return;
       }
+
+      req.session.user = 'my user';
     }
     catch (err) {
       if (err instanceof ZodError) {
