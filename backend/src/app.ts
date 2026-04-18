@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 import z, { ZodError } from 'zod';
 
 import { hashPassword, verifyPassword } from './hash.ts'
-import db, { getImageLink, getUserByEmail, insertUser, type User} from './database.ts';
+import * as db from './database.ts'
 import * as validation from './validation.ts'
 import { sessionObject } from './session.ts'
 
@@ -23,7 +23,7 @@ app
   .get(async (req: Request<{ imageName: string }>, res: Response) => {
     try {
       const imageName = req.params.imageName;
-      const result = await getImageLink(imageName);
+      const result = await db.getImageLink(imageName);
       if (result) {
         res.json({
           message: 'Found image',
@@ -62,7 +62,7 @@ app
       const data = req.body;
       validation.signupSchema.parse(data);
 
-      const existingUser = await getUserByEmail(data.email);
+      const existingUser = await db.getUserByEmail(data.email);
       if (existingUser) {
         res.status(400).json({
           'message': 'User already exists'
@@ -71,7 +71,7 @@ app
       }
 
       const passwordHash = await hashPassword(data.password);
-      const user: User = {
+      const user: db.User = {
         id: -1, // Doesn't matter, database creates the id
         email: data.email,
         name: data.name,
@@ -83,7 +83,7 @@ app
         passwordHash: passwordHash
       };
 
-      insertUser(user);
+      db.insertUser(user);
     } 
     catch (err) {
       console.log(err);
@@ -113,7 +113,7 @@ app
       const data = req.body;
       validation.loginSchema.parse(data);
 
-      const user: User | null = await getUserByEmail(data.email);
+      const user: db.User | null = await db.getUserByEmail(data.email);
       if (!user) {
         res.status(404).json({
           'message': 'User does not exist'
