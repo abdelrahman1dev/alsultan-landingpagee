@@ -11,13 +11,10 @@ import { sessionObject } from './session.ts'
 
 const app = express();
 
-const corsOptions = {
+app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-
+  credentials: true 
+}));
 app.use(sessionObject);
 
 // Routes
