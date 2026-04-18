@@ -1,55 +1,54 @@
-import CardLayout from "@/app/components/CardLayout"
-import { ChevronLeft } from "lucide-react";
+import CardLayout from '@/app/components/CardLayout';
+import { ChevronLeft } from 'lucide-react';
 
-import RecentActivityCard from "@/app/components/RecentActivityCard";
+import RecentActivityCard from '@/app/components/RecentActivityCard';
 
 const activityData = [
   {
     id: 1,
-    text: "سارة محمود أكملت اختبار الفلسفة بنجاح",
-    time: "منذ 5 دقائق",
+    text: 'سارة محمود أكملت اختبار الفلسفة بنجاح',
+    time: 'منذ 5 دقائق',
   },
   {
     id: 2,
-    text: "طالب جديد انضم لكورس تاريخ مصر القديمة",
-    time: "منذ 10 دقائق",
+    text: 'طالب جديد انضم لكورس تاريخ مصر القديمة',
+    time: 'منذ 10 دقائق',
   },
   {
     id: 3,
-    text: "ليلى عمر سجلت في كورس جديد",
-    time: "منذ ساعة",
+    text: 'ليلى عمر سجلت في كورس جديد',
+    time: 'منذ ساعة',
   },
 ];
-
 
 const popularCourses = [
   {
     id: 1,
-    title: "الفلسفة اليونانية: العقل والمنطق",
+    title: 'الفلسفة اليونانية: العقل والمنطق',
     lessons: 12,
-    level: "المستوى المتقدم",
-    image: "/images/philosophy.png",
+    level: 'المستوى المتقدم',
+    image: '/images/philosophy.png',
   },
   {
     id: 2,
-    title: "تاريخ مصر القديمة: عصر الأهرام",
+    title: 'تاريخ مصر القديمة: عصر الأهرام',
     lessons: 30,
-    level: "المستوى المتوسط",
-    image: "/images/pyramids.png",
+    level: 'المستوى المتوسط',
+    image: '/images/pyramids.png',
   },
   {
     id: 3,
-    title: "الفلسفة اليونانية: العقل والمنطق",
+    title: 'الفلسفة اليونانية: العقل والمنطق',
     lessons: 12,
-    level: "المستوى المتقدم",
-    image: "/images/philosophy.png",
+    level: 'المستوى المتقدم',
+    image: '/images/philosophy.png',
   },
   {
     id: 4,
-    title: "تاريخ مصر القديمة: عصر الأهرام",
+    title: 'تاريخ مصر القديمة: عصر الأهرام',
     lessons: 30,
-    level: "المستوى المتوسط",
-    image: "/images/pyramids.png",
+    level: 'المستوى المتوسط',
+    image: '/images/pyramids.png',
   },
 ];
 
@@ -129,30 +128,25 @@ export const dashboardData = {
 
 function page() {
   return (
-    <div className="lg:grid flex flex-col lg:grid-cols-3  lg:col-span-3 gap-4 w-full" >
-
+    <div className="lg:grid flex flex-col lg:grid-cols-3  lg:col-span-3 gap-4 w-full">
       <CardLayout classname="col-span-1 lg:col-span-3 bg-linear-to-r from-[#1C1C18]/80 via-[#2a2a25]/80 to-[#3b3b34]/80 backdrop-blur-sm border-[#3b3b34]/50 text-transparent bg-clip-text">
-        <h1 className="text-4xl font-bold text-white drop-shadow-lg">اهلا أستاذ محمد 👋</h1>
+        <h1 className="text-4xl font-bold text-white drop-shadow-lg">
+          اهلا أستاذ محمد 👋
+        </h1>
       </CardLayout>
       {dashboardData.stats.map((card) => (
-        <CardLayout
-          key={card.id}
-      
-        >
+        <CardLayout key={card.id}>
           <p>{card.title}</p>
           <h2>{card.value}</h2>
           <span>{card.change}</span>
         </CardLayout>
       ))}
 
-
       <div className="grid grid-cols-1 lg:grid-cols-3 col-span-3 gap-4 w-full">
         <div className="flex flex-col gap-6">
           {/* Header */}
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold">
-              المقررات الأكثر تفاعلاً
-            </h1>
+            <h1 className="text-2xl font-semibold">المقررات الأكثر تفاعلاً</h1>
 
             <a className="flex flex-row-reverse items-center gap-1 hover:underline group cursor-pointer">
               <ChevronLeft className="group-hover:-translate-x-1 transition-all" />
@@ -196,13 +190,10 @@ function page() {
           </div>
         </div>
 
-        <RecentActivityCard
-          title="نشاط الطلاب الأخير"
-          items={activityData}
-        />
+        <RecentActivityCard title="نشاط الطلاب الأخير" items={activityData} />
       </div>
     </div>
-  )
+  );
 }
 
-export default page
+export default page;

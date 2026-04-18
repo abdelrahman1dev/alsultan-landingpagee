@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function DashboardCard() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default DashboardCard
+export default DashboardCard;

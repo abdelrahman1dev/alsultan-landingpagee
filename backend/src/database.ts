@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Pool } from 'pg';
 import z from 'zod';
 
-import * as validation from './validation.ts'
+import * as validation from './validation.ts';
 
 export class DataIntegrityError extends Error {
   constructor(message: string) {
@@ -41,7 +41,7 @@ export async function getImageLink(name: string): Promise<string | null> {
   return row?.link ?? null;
 }
 
-export async function getUserByEmail(email: string) : Promise<User | null> {
+export async function getUserByEmail(email: string): Promise<User | null> {
   const query = 'SELECT * FROM users WHERE email = $1';
   const values = [email];
 
@@ -64,7 +64,7 @@ export async function getUserByEmail(email: string) : Promise<User | null> {
     parentPhone: row.parent_phone,
     studentPhone: row.student_phone,
     year: row.year,
-    name: row.name
+    name: row.name,
   };
 
   return user;
@@ -74,7 +74,13 @@ export async function insertUser(user: User) {
   const query = `INSERT INTO users(name, email, password, student_phone, parent_phone, year, governorate)
                  VALUES($1, $2, $3, $4, $5, $6, $7)`;
   const values = [
-    user.name, user.email, user.passwordHash, user.studentPhone, user.parentPhone, user.year, user.governorate
+    user.name,
+    user.email,
+    user.passwordHash,
+    user.studentPhone,
+    user.parentPhone,
+    user.year,
+    user.governorate,
   ];
 
   await db.query(query, values);

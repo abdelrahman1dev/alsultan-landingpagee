@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-
-
 type Course = {
   id: string;
   title: string;
@@ -18,20 +16,16 @@ function CourseComp({ imageUrl, title, id, description, price, tags }: Course) {
       <div className="w-full h-64 relative">
         <div className="absolute inset-0 animate-pulse bg-[#e6d3a3] rounded-t-2xl" />
         {imageUrl && (
-
           <Image
             src={imageUrl}
             alt="Course Image"
             fill
             className="object-cover rounded-t-2xl"
             onLoadingComplete={(img) => {
-              img.style.opacity = "1";
+              img.style.opacity = '1';
             }}
-            style={{ opacity: 0, transition: "opacity 0.3s ease" }}
+            style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
           />
-
-
-
         )}
       </div>
       <div className="p-6 md:p-8 space-y-6 bg-[#e6d3a3]/10 backdrop-blur-md">

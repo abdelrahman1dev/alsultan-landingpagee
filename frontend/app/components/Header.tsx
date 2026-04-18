@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, Origami , UserPlus  } from 'lucide-react';
+import { Menu, Origami, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
@@ -106,8 +106,8 @@ function Header() {
             </ul>
 
             <button onClick={toggleMenu}>
-              <UserPlus className='hidden lg:block' />
-              <Menu className='block lg:hidden' />
+              <UserPlus className="hidden lg:block" />
+              <Menu className="block lg:hidden" />
             </button>
           </nav>
 
@@ -153,6 +153,5 @@ function Header() {
     </>
   );
 }
-
 
 export default Header;

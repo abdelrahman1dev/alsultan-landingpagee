@@ -159,8 +159,6 @@ form div p {
   @apply text-red-500 mt-1 text-sm;
 }
 
-
-
 * {
   --sb-track-color: #272722;
   --sb-thumb-color: #4c4c3f;
@@ -168,7 +166,7 @@ form div p {
 }
 
 *::-webkit-scrollbar {
-  width: var(--sb-size)
+  width: var(--sb-size);
 }
 
 *::-webkit-scrollbar-track {
@@ -179,12 +177,10 @@ form div p {
 *::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
   border-radius: 3px;
-  
 }
 
 @supports not selector(::-webkit-scrollbar) {
   * {
-    scrollbar-color: var(--sb-thumb-color)
-                     var(--sb-track-color);
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
 }

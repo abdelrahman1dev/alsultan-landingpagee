@@ -1,48 +1,56 @@
-import React from 'react'
-import { BookOpen, Headphones, DollarSign, RefreshCcw, Sparkles, Users, Target } from 'lucide-react'
+import React from 'react';
+import {
+  BookOpen,
+  Headphones,
+  DollarSign,
+  RefreshCcw,
+  Sparkles,
+  Users,
+  Target,
+} from 'lucide-react';
 
 const reasons = [
   {
     title: 'محتوى عالي الجودة',
-    description: 'نقدم محتوى تعليمي عالي الجودة يغطي جميع المواضيع المتعلقة بالتاريخ المصري والعالمي.',
-    icon: BookOpen
+    description:
+      'نقدم محتوى تعليمي عالي الجودة يغطي جميع المواضيع المتعلقة بالتاريخ المصري والعالمي.',
+    icon: BookOpen,
   },
   {
     title: 'دعم مستمر',
     description: 'فريق الدعم متاح دائمًا لمساعدتك في أي استفسار أو مشكلة.',
-    icon: Headphones
+    icon: Headphones,
   },
   {
     title: 'أسعار مناسبة',
     description: 'خطط أسعار مرنة تناسب جميع الطلاب.',
-    icon: DollarSign
+    icon: DollarSign,
   },
   {
     title: 'محتوى محدث',
     description: 'نقوم بتحديث المحتوى باستمرار لضمان أحدث المعلومات.',
-    icon: RefreshCcw
+    icon: RefreshCcw,
   },
   {
     title: 'تعلم تفاعلي',
     description: 'فيديوهات وتمارين تفاعلية لتجربة تعلم ممتعة.',
-    icon: Sparkles
+    icon: Sparkles,
   },
   {
     title: 'مجتمع داعم',
     description: 'تواصل مع طلاب آخرين وشارك المعرفة.',
-    icon: Users
+    icon: Users,
   },
   {
     title: 'توجيه شخصي',
     description: 'نساعدك بخطة مخصصة لتحقيق أهدافك.',
-    icon: Target
-  }
-]
+    icon: Target,
+  },
+];
 
 function WhyUs() {
   return (
     <section className="w-full py-24 px-6 flex flex-col items-center">
-      
       {/* Title */}
       <div className="text-center max-w-2xl mb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -56,7 +64,7 @@ function WhyUs() {
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
         {reasons.map((reason, index) => {
-          const Icon = reason.icon
+          const Icon = reason.icon;
           return (
             <div
               key={index}
@@ -78,11 +86,11 @@ function WhyUs() {
                 {reason.description}
               </p>
             </div>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }
 
-export default WhyUs
+export default WhyUs;

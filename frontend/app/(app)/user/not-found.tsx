@@ -1,5 +1,3 @@
-
-
 function notFound() {
   return (
     <section className="w-full h-screen flex items-center justify-center bg-[#1C1C18]">
@@ -8,7 +6,7 @@ function notFound() {
         <p className="text-xl text-[#e6d3a3] opacity-90">الصفحة غير موجودة</p>
       </div>
     </section>
-  )
+  );
 }
 
 export default notFound;

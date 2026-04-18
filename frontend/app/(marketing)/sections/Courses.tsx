@@ -6,8 +6,6 @@ import CourseComp from '../../components/CourseComp';
 import { API_URL } from '../../config/config';
 import { courses } from '@/data/courses';
 
-
-
 export default function Courses() {
   const [courseImg, setCourseImg] = useState<string | null>(null);
 
@@ -46,7 +44,7 @@ export default function Courses() {
             tags={course.tags}
             imageUrl={courseImg}
           />
-        ))} 
+        ))}
       </div>
     </section>
   );

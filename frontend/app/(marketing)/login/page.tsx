@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Cairo } from 'next/font/google';
 import { FormEvent } from 'react';
 import { toast } from 'sonner';
-import { api } from "../hooks/api"
+import { api } from '../hooks/api';
 import { useRouter } from 'next/navigation';
 
 const cairo = Cairo({
@@ -14,12 +14,9 @@ const cairo = Cairo({
 });
 
 function page() {
-
   const router = useRouter();
 
-
   const onsubmit = async (e: FormEvent<HTMLFormElement>) => {
-
     e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
     const payload = {
@@ -27,10 +24,8 @@ function page() {
       password: data.get('password') as string,
     };
 
-
-
     try {
-      const res = await api.post('/login', payload, {withCredentials: true})
+      const res = await api.post('/login', payload, { withCredentials: true });
 
       toast.success('تم الدخول بنجاح!');
 
@@ -38,16 +33,11 @@ function page() {
     } catch (err: any) {
       console.error(err);
 
-      const message =
-        err.response?.data?.message || 'حدث خطأ أثناء الدخول';
+      const message = err.response?.data?.message || 'حدث خطأ أثناء الدخول';
 
       toast.error(message);
     }
-     
   };
-
-
-
 
   return (
     <section className="w-full min-h-screen flex flex-row-reverse gap-10 lg:gap-20 p-5 items-center justify-center ">
@@ -55,10 +45,7 @@ function page() {
         <h1 className="text-4xl text-center font-bold text-[#e6d3a3]">
           تسجيل الدخول
         </h1>
-        <form
-          onSubmit={onsubmit}
-          className={`w-full ${cairo.className}`}
-        >
+        <form onSubmit={onsubmit} className={`w-full ${cairo.className}`}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-[#e6d3a3] mb-2">
               البريد الإلكتروني

@@ -14,7 +14,6 @@ export default function Home() {
       <YearSec />
       <Courses />
       <Cta />
-
     </main>
   );
 }
