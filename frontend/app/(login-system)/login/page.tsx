@@ -32,7 +32,7 @@ function page() {
 
       toast.success('تم الدخول بنجاح!');
 
-      router.push('/user/dashboard');
+      router.push('/user');
     } catch (err: any) {
       console.error(err);
 
