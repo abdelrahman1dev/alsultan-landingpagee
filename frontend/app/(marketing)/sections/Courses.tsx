@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import CourseComp from '../../components/CourseComp';
 
-import { API_URL } from '../../config/config';
 import { courses } from '@/data/courses';
+import { api } from './../hooks/api';
 
 export default function Courses() {
   const [courseImg, setCourseImg] = useState<string | null>(null);
@@ -12,16 +12,16 @@ export default function Courses() {
   useEffect(() => {
     async function getCourseImg() {
       try {
-        const response = await fetch(`${API_URL}/images/course_image`);
-        const data = await response.json();
+        const res = await api.get('/images/course_image');
 
-        if (data['imageUrl']) {
-          setCourseImg(data['imageUrl']);
+        if (res.data.imageUrl) {
+          setCourseImg(res.data.imageUrl);
         } else {
           setCourseImg(null);
         }
       } catch (err) {
         console.error(err);
+        setCourseImg(null);
       }
     }
 
