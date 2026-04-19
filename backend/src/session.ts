@@ -10,7 +10,8 @@ export const sessionObject = session({
   saveUninitialized: false, // only create the cookie once we modify the session
   cookie: {
     secure: process.env.NODE_ENV == 'production',
-    httpOnly: true
+    httpOnly: true,
+    sameSite: 'lax'
   }
 });
 
