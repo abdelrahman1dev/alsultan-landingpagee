@@ -12,6 +12,7 @@ export interface CourseAsset {
   description?: string;
   duration?: string;
   videoUrl?: string;
+  content?: string;
   fileUrl?: string;
   children?: CourseAsset[];
 }
