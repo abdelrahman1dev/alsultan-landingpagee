@@ -13,6 +13,8 @@ const cairo = Cairo({
   weight: ['400', '700'],
 });
 
+
+
 function page() {
   const router = useRouter();
 
