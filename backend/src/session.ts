@@ -17,6 +17,8 @@ export const sessionObject = session({
 
 type UserSessionData = {
   id: number;
+  name: string;
+  email: string;
 };
 
 declare module 'express-session' {
