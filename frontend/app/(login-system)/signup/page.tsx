@@ -18,15 +18,15 @@ import {
   ComboboxList,
 } from '@/components/ui/combobox';
 import { toast } from 'sonner';
+import { Eye, EyeOff } from 'lucide-react';
 
 import { useForm } from 'react-hook-form';
 
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Toast } from 'radix-ui';
-import { request } from 'node:https';
+import { useRouter } from 'next/navigation';
 
-import { api } from '../hooks/api';
+import { api } from '@/app/hooks/api';
 
 const cairo = Cairo({ subsets: ['arabic'], weight: ['400', '700'] });
 
@@ -72,6 +72,10 @@ function Page() {
     },
   });
 
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const onsubmit = async (data: Infer) => {
     console.log('valid data', data);
 
@@ -79,6 +83,8 @@ function Page() {
       const res = await api.post('/signup', data);
 
       toast.success('تم إنشاء الحساب بنجاح!');
+      form.reset();
+      router.push('/login');
     } catch (err) {
       console.error(err);
       toast.error('حدث خطأ اثناء انشاء الحساب');
@@ -190,26 +196,39 @@ function Page() {
           </div>
 
           {/* Password */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label htmlFor="password" className="block text-[#e6d3a3] mb-2">
               كلمة المرور
             </label>
             <input
               {...form.register('password')}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               minLength={6}
               className="rounded-lg bg-[#1C1C18] w-full outline-none text-[#e6d3a3] placeholder:text-[#e6d3a3] border-2 border-[#e6d3a3] p-2 placeholder:opacity-70"
               placeholder="كلمة المرور (6 أحرف على الأقل)"
             />
+            {showPassword ? (
+              <EyeOff
+                size={20}
+                className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer text-[#e6d3a3]"
+                onClick={() => setShowPassword(false)}
+              />
+            ) : (
+              <Eye
+                size={20}
+                className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer text-[#e6d3a3]"
+                onClick={() => setShowPassword(true)}
+              />
+            )}
             {form.formState.errors.password && (
               <p>{form.formState.errors.password?.message}</p>
             )}
           </div>
 
           {/* Confirm password */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               htmlFor="confirmPassword"
               className="block text-[#e6d3a3] mb-2"
@@ -218,11 +237,27 @@ function Page() {
             </label>
             <input
               {...form.register('confirmPassword')}
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               id="confirmPassword"
               name="confirmPassword"
               className="rounded-lg bg-[#1C1C18] w-full outline-none text-[#e6d3a3] border-2 border-[#e6d3a3] p-2"
             />
+            {showConfirmPassword ? (
+              <EyeOff
+                size={20}
+                className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer text-[#e6d3a3]"
+                onClick={() => setShowConfirmPassword(false)}
+              />
+            ) : (
+              <Eye
+                size={20}
+                className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer text-[#e6d3a3]"
+                onClick={() => setShowConfirmPassword(true)}
+              />
+            )}
+            {form.formState.errors.password && (
+              <p>{form.formState.errors.password?.message}</p>
+            )}
             {form.formState.errors.confirmPassword && (
               <p>{form.formState.errors.confirmPassword?.message}</p>
             )}

@@ -132,6 +132,8 @@ app
 
       req.session.user = {
         id: user.id,
+        name: user.name,
+        email: user.email,
       };
     } catch (err) {
       if (err instanceof ZodError) {

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ExpandableText from './EcalpsedTxt';
 
 type Course = {
   id: string;
@@ -12,7 +13,7 @@ type Course = {
 
 function CourseComp({ imageUrl, title, id, description, price, tags }: Course) {
   return (
-    <div className="w-full flex flex-col text-right rounded-2xl bg-[#e6d3a3]/20 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] border border-[#e6d3a3]/20">
+    <div className="w-full max-h-fit flex flex-col text-right rounded-2xl bg-[#e6d3a3]/20 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02] border border-[#e6d3a3]/20">
       <div className="w-full h-64 relative">
         <div className="absolute inset-0 animate-pulse bg-[#e6d3a3] rounded-t-2xl" />
         {imageUrl && (
@@ -32,9 +33,7 @@ function CourseComp({ imageUrl, title, id, description, price, tags }: Course) {
         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-[#e6d3a3] leading-tight">
           {title}
         </h1>
-        <h2 className="text-lg md:text-xl text-[#e6d3a3]/90 leading-relaxed mb-6">
-          {description}
-        </h2>
+        <ExpandableText text={description} />
         <p className="text-2xl font-bold text-white mb-6">{price}</p>
         <Link href={`/user/courses/${id}`}>
           <button className="w-full px-6 mb-5 py-4 rounded-xl text-xl font-semibold bg-[#e6d3a3] hover:bg-[#d4c38c] text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer">
