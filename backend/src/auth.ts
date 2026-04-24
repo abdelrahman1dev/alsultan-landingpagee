@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 if (!process.env.TOKEN_SECRET_KEY) {
   throw new Error('Secret key not set in environment variables.');
@@ -14,9 +14,9 @@ export function signToken(payload: object) {
 // Also returns the decoded payload
 export function verifyToken(token: string) {
   const payload = jwt.verify(token, TOKEN_SECRET_KEY);
-  if (typeof payload === "string") {
+  if (typeof payload === 'string') {
     // We should only use objects, enforce
-    throw new Error("JWT payload is a string, expected an object.");
+    throw new Error('JWT payload is a string, expected an object.');
   }
   return payload;
 }

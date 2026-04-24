@@ -281,7 +281,7 @@ function Page() {
             </Link>
           </span>
         </form>
-      </div >
+      </div>
 
       <div className="right-sec w-full hidden lg:block">
         <Image
@@ -292,7 +292,7 @@ function Page() {
           className="w-full h-auto"
         />
       </div>
-    </section >
+    </section>
   );
 }
 
@@ -582,10 +582,11 @@ function PhoneInput({
                   key={c}
                   type="button"
                   onClick={() => handleCountrySelect(c)}
-                  className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm cursor-pointer hover:bg-[#2a2a25] transition-colors ${c === selectedCountry
-                    ? 'bg-[#2a2a25] text-[#e6d3a3]'
-                    : 'text-[#e6d3a3]/80'
-                    }`}
+                  className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm cursor-pointer hover:bg-[#2a2a25] transition-colors ${
+                    c === selectedCountry
+                      ? 'bg-[#2a2a25] text-[#e6d3a3]'
+                      : 'text-[#e6d3a3]/80'
+                  }`}
                 >
                   <span className="font-medium">{c}</span>
                   <span className="text-[#e6d3a3]/50">
