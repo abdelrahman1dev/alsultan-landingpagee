@@ -198,6 +198,16 @@ app.route('/course/:courseId').get(async (req: Request, res: Response) => {
   }
 });
 
+app.route('/courses').get(async (req: Request, res: Response) => {
+  try {
+    const courses = await db.getAllCourses();
+    return res
+      .status(200)
+      .json({ message: 'Courses retrieval successful', data: courses });
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 app.route('/video/:videoId').get(async (req: Request, res: Response) => {
