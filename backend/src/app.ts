@@ -186,9 +186,12 @@ app.route('/course/:courseId').get(async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Invalid course ID paramater' });
   }
 
-  db.getCourseById(Number(courseId));
+  const course: db.Course | null = await db.getCourseById(Number(courseId));
+  if (!course) {
+    return res.status(400).json({ message: 'Course not found' });
+  }
 
-  return res.status(200).json('Yay response');
+  return res.status(200).json({ message: 'Found course', data: course });
 });
 
 app.route('/video/:videoId').get(async (req: Request, res: Response) => {
