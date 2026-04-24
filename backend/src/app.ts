@@ -170,6 +170,11 @@ app.route('/video/:videoId').get(async (req: Request, res: Response) => {
   try {
     const axios = (await import('axios')).default;
 
+    const payload = auth.verifyToken(req.cookies.user_token);
+    if (!payload.id) {
+      throw new Error("Expected id in token.");
+    }
+
     const response = await axios.post(
       `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
       {
@@ -178,7 +183,7 @@ app.route('/video/:videoId').get(async (req: Request, res: Response) => {
         annotate: JSON.stringify([
           {
             type: "rtext",
-            text: `ID: ${req.cookies.user_token}`,
+            text: `ID: ${payload.id}`,
             interval: 5000,
             alpha: 0.6,
             color: "#FFFFFF",   
