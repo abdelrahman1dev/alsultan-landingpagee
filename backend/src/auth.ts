@@ -13,5 +13,10 @@ export function signToken(payload: object | string) {
 
 // Also returns the decoded payload
 export function verifyToken(token: string) {
-  return jwt.verify(token, TOKEN_SECRET_KEY);
+  const payload = jwt.verify(token, TOKEN_SECRET_KEY);
+  if (typeof payload === "string") {
+    // We should only use objects, enforce
+    throw new Error("JWT payload is a string, expected an object.");
+  }
+  return payload;
 }
