@@ -1,19 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { api } from '@/app/hooks/api'
+
 export default function VideoPlayer() {
   const [videoData, setVideoData] = useState<any>(null);
 
   useEffect(() => {
     async function loadVideo() {
-      const res = await fetch(
-        "http://localhost:5000/video/2d076a459fca4e82a5f68bbb25a51fce",
-        {
-          credentials: "include",
-        }
-      );
+      const res = await api.get("/video/2d076a459fca4e82a5f68bbb25a51fce", { withCredentials: true });
 
-      const data = await res.json();
+      const data = res.data;
       console.log("video data:", data);
 
       setVideoData(data);
