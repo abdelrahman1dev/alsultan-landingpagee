@@ -26,10 +26,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const authCheck = async () => {
       try {
         const res = await api.get('/me');
-        console.log('res:', res.data); // is sessionData there?
-        console.log('loggedIn:', !!res.data.sessionData);
-        setUserData(res.data.sessionData);
-        setLoggedIn(!!res.data.sessionData);
+        console.log('res:', res.data); 
+        console.log('loggedIn:', !!res.data);
+        setUserData(res.data);
+        setLoggedIn(!!res.data);
       } catch (err) {
         console.log('auth error:', err);
         setLoggedIn(false);

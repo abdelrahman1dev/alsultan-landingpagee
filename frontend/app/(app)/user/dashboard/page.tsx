@@ -29,28 +29,28 @@ const popularCourses = [
     title: 'الفلسفة اليونانية: العقل والمنطق',
     lessons: 12,
     level: 'المستوى المتقدم',
-    image: '/images/philosophy.png',
+    image: 'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpN7hTMsp8yEIH9Fkio41AhsfSRzt5p3POKvbB',
   },
   {
     id: 2,
     title: 'تاريخ مصر القديمة: عصر الأهرام',
     lessons: 30,
     level: 'المستوى المتوسط',
-    image: '/images/pyramids.png',
+    image: 'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpN7hTMsp8yEIH9Fkio41AhsfSRzt5p3POKvbB',
   },
   {
     id: 3,
     title: 'الفلسفة اليونانية: العقل والمنطق',
     lessons: 12,
     level: 'المستوى المتقدم',
-    image: '/images/philosophy.png',
+    image: 'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpN7hTMsp8yEIH9Fkio41AhsfSRzt5p3POKvbB',
   },
   {
     id: 4,
     title: 'تاريخ مصر القديمة: عصر الأهرام',
     lessons: 30,
     level: 'المستوى المتوسط',
-    image: '/images/pyramids.png',
+    image: 'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpN7hTMsp8yEIH9Fkio41AhsfSRzt5p3POKvbB',
   },
 ];
 

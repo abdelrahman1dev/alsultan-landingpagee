@@ -37,7 +37,7 @@ function Chatbot() {
   const [botTyping, setBotTyping] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -67,10 +67,6 @@ function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, botTyping]);
 
-  // Initialize audio
-  useEffect(() => {
-    audioRef.current = new Audio('/notify.mp3');
-  }, []);
 
   // Keyboard detection
   useEffect(() => {
@@ -201,11 +197,7 @@ function Chatbot() {
     );
   }
 
-  function playNotificationSound() {
-    audioRef.current?.play().catch((err) => {
-      console.log('Audio play failed:', err);
-    });
-  }
+
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
