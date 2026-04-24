@@ -4,19 +4,29 @@ export const MIN_PASSWORD_LENGTH = 6;
 export const MIN_NAME_LENGTH = 2;
 export const EGYPT_MOBILE_REGEX = /^\+201[0125]\d{8}$/;
 
-// the user schema simply cares about required/optional fields and their types
-// it shouldn't do any validation, thats for the sign up and login schemas
-// think of it as a mirror of the users schema on the database side
+// schema for the users column in the database
 export const userSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   email: z.string(),
   name: z.string(),
   studentPhone: z.string(),
   parentPhone: z.string(),
-  specialization: z.string().optional(),
+  specialization: z.string().nullable(),
   governorate: z.string(),
   year: z.string(),
   passwordHash: z.string(),
+});
+
+// schema for the courses column in the database
+export const courseSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  image_url: z.string(),
+  price: z.number(),
+  year: z.string(),
+  specialization: z.string().nullable(),
+  description: z.string().nullable(),
+  tags: z.string().nullable(),
 });
 
 export const loginSchema = z.object({

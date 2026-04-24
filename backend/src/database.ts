@@ -26,6 +26,7 @@ const db = new Pool({
 });
 
 export type User = z.infer<typeof validation.userSchema>;
+export type Course = z.infer<typeof validation.courseSchema>;
 
 export async function getImageLink(name: string): Promise<string | null> {
   const query = 'SELECT * FROM image_links WHERE name = $1';
@@ -84,6 +85,40 @@ export async function insertUser(user: User) {
   ];
 
   await db.query(query, values);
+}
+
+export async function getCourseById(id: number) {
+  const query = 'SELECT * FROM courses WHERE id = $1';
+  const values = [id];
+
+  const res = await db.query(query, values);
+  if (res.rowCount && res.rowCount > 1) {
+    throw new NonUniqueDataError(res.rowCount);
+  }
+
+  const row = res.rows[0];
+  if (!row) {
+    return null;
+  }
+
+  validation.courseSchema.parse(row);
+
+  return row;
+}
+
+export async function getAllCourses() {
+  const query = 'SELECT * FROM courses';
+
+  const res = await db.query(query);
+  if (!res.rows) {
+    return null;
+  }
+
+  for (const course of res.rows) {
+    validation.courseSchema.parse(course);
+  }
+
+  return res.rows;
 }
 
 export default db;
