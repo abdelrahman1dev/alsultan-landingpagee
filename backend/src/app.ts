@@ -161,7 +161,7 @@ app
 
 
 app.route('/video/:videoId').get(async (req: Request, res: Response) => {
-  if (!req.session.user) {
+  if (!req.cookies.user_token) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
@@ -178,7 +178,7 @@ app.route('/video/:videoId').get(async (req: Request, res: Response) => {
         annotate: JSON.stringify([
           {
             type: "rtext",
-            text: `ID: ${req.session.user.id}`,
+            text: `ID: ${req.cookies.user_token}`,
             interval: 5000,
             alpha: 0.6,
             color: "#FFFFFF",   
