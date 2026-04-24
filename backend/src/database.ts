@@ -106,4 +106,19 @@ export async function getCourseById(id: number) {
   return row;
 }
 
+export async function getAllCourses() {
+  const query = 'SELECT * FROM courses';
+
+  const res = await db.query(query);
+  if (!res.rows) {
+    return null;
+  }
+
+  for (const course of res.rows) {
+    validation.courseSchema.parse(course);
+  }
+
+  return res.rows;
+}
+
 export default db;
