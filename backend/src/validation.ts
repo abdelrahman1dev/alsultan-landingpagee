@@ -6,12 +6,12 @@ export const EGYPT_MOBILE_REGEX = /^\+201[0125]\d{8}$/;
 
 // schema for the users column in the database
 export const userSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   email: z.string(),
   name: z.string(),
   studentPhone: z.string(),
   parentPhone: z.string(),
-  specialization: z.string().optional(),
+  specialization: z.string().nullable(),
   governorate: z.string(),
   year: z.string(),
   passwordHash: z.string(),
@@ -19,14 +19,14 @@ export const userSchema = z.object({
 
 // schema for the courses column in the database
 export const courseSchema = z.object({
-  id: z.number().int(),
+  id: z.string(),
   title: z.string(),
-  imageUrl: z.string(),
+  image_url: z.string(),
   price: z.number(),
   year: z.string(),
-  specialization: z.string().optional(),
-  description: z.string().optional(),
-  tags: z.string().optional(),
+  specialization: z.string().nullable(),
+  description: z.string().nullable(),
+  tags: z.string().nullable(),
 });
 
 export const loginSchema = z.object({
