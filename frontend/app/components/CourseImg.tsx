@@ -2,35 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { api } from './../hooks/api';
+import { useCourses } from '../hooks/useCourses';
 
 export default function CourseImage({ title }: { title: string }) {
-  const [courseImg, setCourseImg] = useState<string | null>(null);
+ const { courses } = useCourses();
+ const course = courses.find((c: any) => c.title === title);
 
-  useEffect(() => {
-    async function getCourseImg() {
-      try {
-        const res = await api.get('/images/course_image');
-
-        if (res.data.imageUrl) {
-          setCourseImg(res.data.imageUrl);
-        } else {
-          setCourseImg(null);
-        }
-      } catch (err) {
-        console.error(err);
-        setCourseImg(null);
-      }
-    }
-
-    getCourseImg();
-  }, []);
   return (
     <Image
-      src={courseImg ? courseImg : '/default-course-image.jpg'}
+      src={course?.image_url ? course.image_url : '/default-course-image.jpg'}
       alt={title}
       width={600}
       height={400}
-      className="w-full h-64 object-cover rounded-t-2xl"
+      className="w-full h-64 object-cover rounded-t-2xl z-100"
     />
   );
 }

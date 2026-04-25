@@ -1,17 +1,20 @@
 import CourseImage from '@/app/components/CourseImg';
-import { courses } from '@/data/courses';
 import BackButton from '@/app/components/BackBtn';
 import ExpandableText from '@/app/components/EcalpsedTxt';
 import Link from 'next/link';
+import { api } from '@/app/hooks/api';
+
 
 export default async function CoursePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const res = await api.get('/courses');
+  const courses = res.data.data || [];
   const { id } = await params;
 
-  const course = courses.find((c) => c.id === id);
+  const course = courses.find((c: any) => c.id === id);
 
   if (!course) {
     return <h1>course not found</h1>;
@@ -50,7 +53,7 @@ function CourseData({ course }: CourseDataProps) {
             قم بشراء الكورس للوصول إلى جميع الدروس والمواد
           </p>
           <div className="flex justify-center items-center w-full">
-            <Link href={`/user/courses/${course.id}/CP`}>
+            <Link href={`/user/courses/${course.id}/data`}>
               <button className="px-12 py-4 mx-auto bg-[#e6d3a3]/20 hover:bg-[#e6d3a3]/30 border-2 border-[#e6d3a3] text-[#e6d3a3] font-bold text-lg rounded-full shadow-lg hover:shadow-[#e6d3a3]/25 transform hover:scale-105 transition-all">
                 شراء الكورس
               </button>

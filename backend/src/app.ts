@@ -210,6 +210,18 @@ app.route('/courses').get(async (req: Request, res: Response) => {
   }
 });
 
+
+app.route('/test').get(async (req: Request, res: Response) => {
+  try {    const axios = (await import('axios')).default;
+    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+    return res.json(response.data);
+  }
+    catch (err: any) {
+      console.log(err);
+      res.status(500).send();
+    }
+});
+
 app.route('/video/:videoId').get(async (req: Request, res: Response) => {
   if (!req.cookies.user_token) {
     return res.status(401).json({ message: 'Unauthorized' });

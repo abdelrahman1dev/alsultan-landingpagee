@@ -1,32 +1,13 @@
 'use client';
-
-import React, { useEffect, useState } from 'react';
 import CourseComp from '../../components/CourseComp';
-
-import { courses } from '@/data/courses';
-import { api } from './../hooks/api';
-
+import { useCourses } from '../../hooks/useCourses';
+import CoursesLoading from '@/app/components/CoursesLoading';
 export default function Courses() {
-  const [courseImg, setCourseImg] = useState<string | null>(null);
+  const { courses, loading } = useCourses();
 
-  useEffect(() => {
-    async function getCourseImg() {
-      try {
-        const res = await api.get('/images/course_image');
-
-        if (res.data.imageUrl) {
-          setCourseImg(res.data.imageUrl);
-        } else {
-          setCourseImg(null);
-        }
-      } catch (err) {
-        console.error(err);
-        setCourseImg(null);
-      }
-    }
-
-    getCourseImg();
-  }, []);
+  if (loading) {
+    return <CoursesLoading />;
+  }
 
   return (
     <section className="w-full min-h-screen flex mt-20 flex-col gap-20 p-5 items-center justify-center">
@@ -36,13 +17,13 @@ export default function Courses() {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
         {courses.map((course) => (
           <CourseComp
+            Loading={loading}
             key={course.id}
             id={course.id}
             title={course.title}
             description={course.description}
             price={course.price}
-            tags={course.tags}
-            imageUrl={courseImg}
+            imageUrl={course.image_url}
           />
         ))}
       </div>
