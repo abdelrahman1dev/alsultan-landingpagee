@@ -42,14 +42,16 @@ router
         passwordHash: passwordHash,
       };
 
-    } catch (err) {
       await db.insertUser(user);
+      res.status(200).send();
+    } catch (err: any) {
       console.log(err);
-      res.status(400).send();
-      return;
+      if (err instanceof ZodError) {
+        res.status(400).send();
+      } else {
+        res.status(500).send();
+      }
     }
-
-    res.status(200).send();
   });
 
 router
