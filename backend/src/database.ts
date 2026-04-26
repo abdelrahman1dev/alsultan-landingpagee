@@ -118,4 +118,16 @@ export async function getAllCourses() {
   return res.rows;
 }
 
+export async function getCourseLectures(courseId: number) {
+  const query = 'SELECT * FROM lectures WHERE course_id=$1';
+  const values = [courseId];
+
+  const res = await db.query(query, values);
+  for (const lecture of res.rows) {
+    validation.lectureSchema.parse(lecture);
+  }
+
+  return res.rows;
+}
+
 export default db;
