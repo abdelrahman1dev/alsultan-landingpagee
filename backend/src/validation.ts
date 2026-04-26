@@ -4,7 +4,6 @@ export const MIN_PASSWORD_LENGTH = 6;
 export const MIN_NAME_LENGTH = 2;
 export const EGYPT_MOBILE_REGEX = /^\+201[0125]\d{8}$/;
 
-// schema for the users column in the database
 export const userSchema = z.object({
   id: z.string(),
   email: z.string(),
@@ -17,7 +16,7 @@ export const userSchema = z.object({
   passwordHash: z.string(),
 });
 
-// schema for the courses column in the database
+// Courses table in db
 export const courseSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -27,6 +26,13 @@ export const courseSchema = z.object({
   specialization: z.string().nullable(),
   description: z.string().nullable(),
   tags: z.string().nullable(),
+});
+
+// Lectures table in db
+export const lectureSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  course_id: z.string(),
 });
 
 export const loginSchema = z.object({
