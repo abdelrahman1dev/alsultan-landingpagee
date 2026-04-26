@@ -72,14 +72,15 @@ export async function getUserByEmail(email: string): Promise<User | null> {
 }
 
 export async function insertUser(user: User) {
-  const query = `INSERT INTO users(name, email, password, student_phone, parent_phone, year, governorate)
-                 VALUES($1, $2, $3, $4, $5, $6, $7)`;
+  const query = `INSERT INTO users(name, email, password, student_phone, parent_phone, specialization, year, governorate)
+                 VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
   const values = [
     user.name,
     user.email,
     user.passwordHash,
     user.studentPhone,
     user.parentPhone,
+    user.specialization,
     user.year,
     user.governorate,
   ];
