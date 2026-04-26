@@ -1,15 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 import { useAuth } from '../hooks/useAuth';
 import {
   Menu,
   BellRing,
   X,
-  EllipsisVertical,
   Home,
-  User,
   BookOpen,
   Wallet,
   Clock,
@@ -18,39 +15,69 @@ import {
   Share2,
   Globe,
   MessageCircle,
-  Phone,
   Mail,
+  ChevronLeft,
+  ChevronRight,
+  Search,
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
-const navItems = [
-  { name: 'الرئيسية', href: '/user/dashboard', icon: Home },
-  { name: 'الدروس', href: '/user/courses', icon: BookOpen },
-  { name: 'المحفظة', href: '/user/wallet', icon: Wallet },
-  { name: 'التاريخ', href: '/user/history', icon: Clock },
-  { name: 'الدعم الفني', href: '/user/tech-support', icon: Headset },
-  { name: 'الإعدادات', href: '/user/settings', icon: Settings },
+const navGroups = [
+  {
+    label: 'القائمة الرئيسية',
+    items: [
+      { name: 'الرئيسية', href: '/user/dashboard', icon: Home },
+      { name: 'الدروس', href: '/user/courses', icon: BookOpen, badge: '12' },
+      { name: 'المحفظة', href: '/user/wallet', icon: Wallet },
+      { name: 'التاريخ', href: '/user/history', icon: Clock },
+    ],
+  },
+  {
+    label: 'الدعم',
+    items: [
+      { name: 'الدعم الفني', href: '/user/tech-support', icon: Headset },
+      { name: 'الإعدادات', href: '/user/settings', icon: Settings },
+    ],
+  },
 ];
 
-function SideNav() {
-  const { loggedIn, isLoading, userData } = useAuth();
+const socialLinks = [
+  { icon: Share2, label: 'مشاركة' },
+  { icon: Globe, label: 'الموقع' },
+  { icon: MessageCircle, label: 'رسائل' },
+  { icon: Mail, label: 'بريد' },
+];
+
+function UserAvatar({ name }: { name: string }) {
+  const initials = name
+    ? name.split(' ').slice(0, 2).map((w) => w[0]).join('')
+    : '؟';
+  return (
+    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#3d3928] to-[#5a5032] flex items-center justify-center text-[#e6d3a3] text-sm font-bold flex-shrink-0">
+      {initials}
+    </div>
+  );
+}
+
+function SideNav({collapsed , setCollapsed}: { collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const { loggedIn, userData } = useAuth();
   const path = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
   const isActive = (href: string) => path.startsWith(href);
+  const userName = loggedIn && userData ? userData.name : '...';
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
-      if (
-        notifRef.current &&
-        !notifRef.current.contains(event.target as Node)
-      ) {
+      if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
         setIsNotifOpen(false);
       }
     }
@@ -60,212 +87,261 @@ function SideNav() {
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside className="relative  lg:static  lg:block right-0 top-0 w-64 h-screen bg-[#1C1C18] text-[#e6d3a3] p-4 border-2 border-[#3b3b34]/50 hidden  shadow-sm shadow-[#e6d3a3]/20">
-        <Link href={'/user/profile'}>
-          <div className="flex justify-between mb-10 cursor-pointer gap-4 py-3 px-6 bg-[#525248] rounded-lg border border-[#3b3b34]/50 items-center">
-            <div className="flex flex-col ">
-              <h1 className=" max-w-30 text-nowrap overflow-hidden text-ellipsis ">
-                {loggedIn && userData ? userData.name : '...'}
-              </h1>
-              <h2 className="text-sm text-white max-w-30 text-nowrap overflow-hidden text-ellipsis">
-                مدرس تاريخ
-              </h2>
-            </div>
-            <span className="min-w-10 min-h-10 rounded-full border overflow-hidden ">
-              <Image
-                src={
-                  'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpNlkL47ap8yEIH9Fkio41AhsfSRzt5p3POKvb'
-                }
-                alt="pfp"
-                width={100}
-                height={100}
-              />
-            </span>
-          </div>
-        </Link>
-        <nav className="">
-          <ul className="space-y-4 mb-20">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`block px-4 py-2 rounded transition ${
-                    isActive(item.href)
-                      ? 'bg-[#3b3b34]'
-                      : 'hover:bg-[#2a2a25] hover:border-2 hover:border-[#3b3b34]/50'
-                  } flex items-center gap-3`}
-                >
-                  <Icon size={20} />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </ul>
-        </nav>
-        <footer className="absolute w-fit  bottom-4 left-4 right-4 flex justify-center gap-4 p-3 bg-[#3b3b34] rounded-lg border border-[#3b3b34]/50 shadow-sm shadow-[#e6d3a3]/20">
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Share2 size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Globe size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <MessageCircle size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Mail size={18} />
-          </a>
-        </footer>
-      </aside>
-
-      {/* Mobile top bar */}
-      <div className="lg:hidden border-b-2 border-[#3b3b34] px-4 py-2 fixed flex items-center justify-between top-0 right-0 z-50 bg-[#1C1C18] shadow-sm shadow-[#e6d3a3]/20 w-full">
-        <button
-          onClick={() => setIsMenuOpen(true)}
-          className="text-[#e6d3a3] p-2 rounded"
-        >
-          <Menu />
-        </button>
-        <div>
+      {/* ─── Desktop Header ─── */}
+      <header className="hidden lg:flex fixed top-0 right-0 left-0 z-50 h-12 bg-[#141412] border-b border-[#1f1f1c] items-center justify-between px-4">
+        <span className="text-[#e6d3a3] font-semibold text-sm">منصة التعلم</span>
+        <div className="flex items-center gap-1">
+          <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#9a9080] hover:text-[#e6d3a3] transition-colors">
+            <Search size={18} />
+          </button>
           <button
             onClick={() => setIsNotifOpen(true)}
-            className="text-[#e6d3a3] p-2 rounded"
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#9a9080] hover:text-[#e6d3a3] transition-colors relative"
           >
-            <BellRing />
+            <BellRing size={18} />
+            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#c4a95a]" />
           </button>
-          <button className="text-[#e6d3a3] p-2 rounded">
-            <EllipsisVertical />
+        </div>
+      </header>
+
+      {/* ─── Desktop Sidebar ─── */}
+      <aside
+        className={`relative hidden lg:flex flex-col h-screen  pt-12 bg-[#141412] text-[#e6d3a3] border-l border-[#1f1f1c] transition-all duration-300 ${
+          collapsed ? 'w-[68px]' : 'w-[230px]'
+        }`}
+      >
+        {/* Collapse toggle */}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="absolute -left-3 top-[68px] z-10 w-6 h-6 rounded-full bg-[#141412] border border-[#2e2e27] flex items-center justify-center text-[#9a9080] hover:text-[#e6d3a3] hover:bg-[#1e1e1a] transition-all shadow-sm"
+          aria-label={collapsed ? 'توسيع' : 'طي'}
+        >
+          {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
+        </button>
+
+        {/* Profile */}
+        <div className="p-3 border-b border-[#1f1f1c]">
+          <Link href="/user/profile">
+            <div
+              className={`flex items-center gap-2.5 p-2.5 rounded-xl bg-[#1c1c18] border border-[#2a2a22] cursor-pointer hover:bg-[#222219] transition-colors ${
+                collapsed ? 'justify-center' : ''
+              }`}
+            >
+              <UserAvatar name={userName} />
+              {!collapsed && (
+                <>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-semibold text-[#e6d3a3] truncate leading-tight">
+                      {userName}
+                    </p>
+                    <p className="text-[11px] text-[#7a7060] mt-0.5">طالب مميز</p>
+                  </div>
+                  <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0 shadow-[0_0_6px_rgba(74,222,128,0.4)]" />
+                </>
+              )}
+            </div>
+          </Link>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 overflow-y-auto p-2.5 space-y-4">
+          {navGroups.map((group) => (
+            <div key={group.label}>
+              {!collapsed && (
+                <p className="text-[10px] uppercase tracking-widest text-[#4a4a42] px-2.5 mb-1.5 font-semibold">
+                  {group.label}
+                </p>
+              )}
+              <ul className="space-y-0.5">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={`relative flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all ${
+                          collapsed ? 'justify-center' : ''
+                        } ${
+                          active
+                            ? 'bg-[#252520] text-[#e6d3a3]'
+                            : 'text-[#7a7060] hover:bg-[#1c1c18] hover:text-[#c4b48a]'
+                        }`}
+                      >
+                        {active && (
+                          <span className="absolute right-0 top-1/2 -translate-y-1/2 w-[3px] h-[18px] bg-[#c4a95a] rounded-r-none rounded-l-sm" />
+                        )}
+                        <Icon size={17} className="flex-shrink-0" strokeWidth={active ? 2.2 : 1.8} />
+                        {!collapsed && <span className="flex-1">{item.name}</span>}
+                        {!collapsed && item.badge && (
+                          <span className="bg-[#2a2820] text-[#c4a95a] text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        {/* Footer social links */}
+        {!collapsed && (
+          <div className="p-3 border-t border-[#1f1f1c]">
+            <div className="flex justify-center gap-3 p-2.5 bg-[#1a1a16] rounded-xl border border-[#252520]">
+              {socialLinks.map(({ icon: Icon, label }) => (
+                <button
+                  key={label}
+                  title={label}
+                  className="w-7 h-7 flex items-center justify-center rounded-lg text-[#5a5548] hover:bg-[#252520] hover:text-[#c4a95a] transition-all"
+                >
+                  <Icon size={14} strokeWidth={1.8} />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
+
+      {/* ─── Mobile Top Bar ─── */}
+      <div className="lg:hidden fixed top-0 right-0 left-0 z-50 flex items-center justify-between px-4 py-2.5 bg-[#141412] border-b border-[#1f1f1c]">
+        <button
+          onClick={() => setIsMenuOpen(true)}
+          className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#9a9080] hover:text-[#e6d3a3] transition-colors"
+        >
+          <Menu size={20} />
+        </button>
+
+        <span className="text-[#e6d3a3] font-semibold text-sm">منصة التعلم</span>
+
+        <div className="flex items-center gap-1">
+          <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#9a9080] hover:text-[#e6d3a3] transition-colors">
+            <Search size={18} />
+          </button>
+          <button
+            onClick={() => setIsNotifOpen(true)}
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#9a9080] hover:text-[#e6d3a3] transition-colors relative"
+          >
+            <BellRing size={18} />
+            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#c4a95a]" />
           </button>
         </div>
       </div>
 
-      {/* Notification panel */}
+      {/* ─── Notification Panel ─── */}
       {isNotifOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-16">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center pt-16 backdrop-blur-sm">
           <div
             ref={notifRef}
-            className="bg-[#1C1C18] w-[90%] max-w-sm rounded-xl shadow-lg p-4 border-2 border-[#3b3b34]"
+            className="bg-[#141412] w-[90%] max-w-sm rounded-2xl border border-[#2a2a22] shadow-2xl overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[#e6d3a3] font-semibold text-lg">
-                الإشعارات
-              </h2>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#1f1f1c]">
+              <h2 className="text-[#e6d3a3] font-semibold text-sm">الإشعارات</h2>
               <button
                 onClick={() => setIsNotifOpen(false)}
-                className="text-[#e6d3a3]/70 hover:text-[#e6d3a3]"
+                className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#7a7060] hover:text-[#e6d3a3] transition-colors"
               >
-                <X size={20} />
+                <X size={16} />
               </button>
             </div>
-            <p className="text-[#e6d3a3]/70 text-sm text-center py-6">
+            <p className="text-center py-10 text-sm text-[#5a5548]">
               لا توجد إشعارات جديدة
             </p>
           </div>
         </div>
       )}
 
-      {/* Menu backdrop */}
-      {isMenuOpen && <div className="fixed inset-0 bg-black/50 z-40" />}
+      {/* ─── Mobile Sidebar Backdrop ─── */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
 
-      {/* Mobile sidebar */}
+      {/* ─── Mobile Sidebar Drawer ─── */}
       <aside
         ref={menuRef}
-        className={`fixed top-0 right-0 h-screen w-[80%] bg-[#1C1C18] text-[#e6d3a3] p-4 z-50 transform transition-transform duration-300 border-2 border-[#3b3b34]/50 shadow-sm shadow-[#e6d3a3]/20 ${
+        className={`fixed top-0 right-0 h-screen w-[80%] max-w-[280px] bg-[#141412] text-[#e6d3a3] z-50 flex flex-col transform transition-transform duration-300 ease-out ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } lg:hidden`}
       >
-        <Link href={'/user/profile'} onClick={() => setIsMenuOpen(false)}>
-          <div className="flex justify-between mb-10 cursor-pointer gap-4 py-3 px-6 bg-[#525248] rounded-lg border border-[#3b3b34]/50 items-center">
-            <div className="flex flex-col ">
-              <h1 className="max-w-30 text-nowrap overflow-hidden text-ellipsis ">
-                محمد محمود احمد عبدالرحمن
-              </h1>
-              <h2 className="text-sm text-white max-w-30 text-nowrap overflow-hidden text-ellipsis">
-                مدرس تاريخ
-              </h2>
+        {/* Drawer header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[#1f1f1c]">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#1c1c18] text-[#7a7060] hover:text-[#e6d3a3] transition-colors"
+          >
+            <X size={18} />
+          </button>
+          <Link href="/user/profile" onClick={() => setIsMenuOpen(false)}>
+            <div className="flex items-center gap-2.5 bg-[#1c1c18] px-3 py-2 rounded-xl border border-[#2a2a22]">
+              <UserAvatar name={userName} />
+              <div>
+                <p className="text-[13px] font-semibold text-[#e6d3a3] leading-tight">{userName}</p>
+                <p className="text-[11px] text-[#7a7060]">طالب مميز</p>
+              </div>
             </div>
-            <span className="min-w-10 min-h-10 rounded-full border overflow-hidden ">
-              <Image
-                src={
-                  'https://ytgu3s3xxa.ufs.sh/f/GNGTKtuqz7dpNlkL47ap8yEIH9Fkio41AhsfSRzt5p3POKvb'
-                }
-                alt="pfp"
-                width={100}
-                height={100}
-              />
-            </span>
-          </div>
-        </Link>
+          </Link>
+        </div>
 
-        <nav>
-          <ul className="space-y-4">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-4 py-2 rounded transition ${
-                    isActive(item.href)
-                      ? 'bg-[#3b3b34]'
-                      : 'hover:bg-[#2a2a25] hover:border-2 hover:border-[#3b3b34]/50'
-                  } flex items-center gap-3`}
-                >
-                  <Icon size={20} />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </ul>
+        {/* Mobile nav */}
+        <nav className="flex-1 overflow-y-auto p-3 space-y-4">
+          {navGroups.map((group) => (
+            <div key={group.label}>
+              <p className="text-[10px] uppercase tracking-widest text-[#4a4a42] px-2 mb-1.5 font-semibold">
+                {group.label}
+              </p>
+              <ul className="space-y-0.5">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
+                          active
+                            ? 'bg-[#252520] text-[#e6d3a3]'
+                            : 'text-[#7a7060] hover:bg-[#1c1c18] hover:text-[#c4b48a]'
+                        }`}
+                      >
+                        {active && (
+                          <span className="absolute right-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#c4a95a] rounded-r-none rounded-l-sm" />
+                        )}
+                        <Icon size={18} strokeWidth={active ? 2.2 : 1.8} />
+                        <span className="flex-1">{item.name}</span>
+                        {item.badge && (
+                          <span className="bg-[#2a2820] text-[#c4a95a] text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
         </nav>
-        <footer className="absolute bottom-0 right-0 flex justify-center gap-4 p-3 bg-[#3b3b34] w-full border-t border-[#3b3b34]/50">
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Share2 size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Globe size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <MessageCircle size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Phone size={18} />
-          </a>
-          <a
-            href="#"
-            className="text-[#e6d3a3]/70 hover:text-[#e6d3a3] p-2 rounded transition"
-          >
-            <Mail size={18} />
-          </a>
-        </footer>
+
+        {/* Mobile drawer footer */}
+        <div className="p-3 border-t border-[#1f1f1c]">
+          <div className="flex justify-center gap-3 p-2.5 bg-[#1a1a16] rounded-xl border border-[#252520]">
+            {socialLinks.map(({ icon: Icon, label }) => (
+              <button
+                key={label}
+                title={label}
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#5a5548] hover:bg-[#252520] hover:text-[#c4a95a] transition-all"
+              >
+                <Icon size={15} strokeWidth={1.8} />
+              </button>
+            ))}
+          </div>
+        </div>
       </aside>
     </>
   );

@@ -2,6 +2,7 @@
 import CourseComp from '../../components/CourseComp';
 import { useCourses } from '../../hooks/useCourses';
 import CoursesLoading from '@/app/components/CoursesLoading';
+
 export default function Courses() {
   const { courses, loading } = useCourses();
 

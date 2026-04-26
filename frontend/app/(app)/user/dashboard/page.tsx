@@ -82,28 +82,7 @@ export const dashboardData = {
     },
   ],
 
-  activity: {
-    id: 'activity',
-    title: 'نشاط الطلاب الأخير',
-    className: 'col-span-1 lg:col-span-1',
-    items: [
-      {
-        id: 1,
-        text: 'طالب جديد انضم إلى كورس الفيزياء',
-        time: 'منذ 5 دقائق',
-      },
-      {
-        id: 2,
-        text: 'تم حل واجب كيمياء',
-        time: 'منذ 10 دقائق',
-      },
-      {
-        id: 3,
-        text: 'تم مشاهدة درس جديد',
-        time: 'منذ 30 دقيقة',
-      },
-    ],
-  },
+  
 
   courses: {
     id: 'coursesList',
@@ -200,7 +179,7 @@ function page() {
           </div>
         </div>
 
-        <RecentActivityCard title="نشاط الطلاب الأخير" items={activityData} />
+        <RecentActivityCard title=""  />
       </div>
     </div>
   );
