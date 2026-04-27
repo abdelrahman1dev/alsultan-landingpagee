@@ -31,8 +31,17 @@ export const courseSchema = z.object({
 // Lectures table in db
 export const lectureSchema = z.object({
   id: z.string(),
-  title: z.string(),
   course_id: z.string(),
+  title: z.string(),
+});
+
+// Lecture videos table in db
+export const lectureVideoSchema = z.object({
+  id: z.string(),
+  lecture_id: z.string(),
+
+  title: z.string(),
+  video_id: z.string(),
 });
 
 export const loginSchema = z.object({
