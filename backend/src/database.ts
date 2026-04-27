@@ -128,6 +128,14 @@ export async function getAllCourses(): Promise<Course[]> {
 }
 
 export async function getCourseLectures(courseId: number): Promise<Lecture[]> {
+  const existsQuery = 'SELECT 1 FROM courses WHERE id=$1';
+  const existsQueryValues = [courseId];
+
+  const existsRes = await db.query(existsQuery, existsQueryValues);
+  if (existsRes.rowCount == 0) {
+    throw new RowNotFoundError(`Course with ID ${courseId} not found`);
+  }
+
   const query = 'SELECT * FROM lectures WHERE course_id=$1';
   const values = [courseId];
 
@@ -142,6 +150,14 @@ export async function getCourseLectures(courseId: number): Promise<Lecture[]> {
 export async function getLectureVideos(
   lectureId: number,
 ): Promise<LectureVideo[]> {
+  const existsQuery = 'SELECT 1 FROM lectures WHERE id=$1';
+  const existsQueryValues = [lectureId];
+
+  const existsRes = await db.query(existsQuery, existsQueryValues);
+  if (existsRes.rowCount == 0) {
+    throw new RowNotFoundError(`Lecture with ID ${lectureId} not found`);
+  }
+
   const query = 'SELECT * FROM lecture_videos WHERE lecture_id=$1';
   const values = [lectureId];
 
