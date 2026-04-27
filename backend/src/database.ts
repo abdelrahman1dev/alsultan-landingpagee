@@ -130,4 +130,16 @@ export async function getCourseLectures(courseId: number) {
   return res.rows;
 }
 
+export async function getLectureVideos(lectureId: number) {
+  const query = 'SELECT * FROM lecture_videos WHERE lecture_id=$1';
+  const values = [lectureId];
+
+  const res = await db.query(query, values);
+  for (const video of res.rows) {
+    validation.lectureVideoSchema.parse(video);
+  }
+
+  return res.rows;
+}
+
 export default db;
