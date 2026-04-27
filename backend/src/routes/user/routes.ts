@@ -3,7 +3,7 @@ import * as db from '../../database.ts';
 import * as validation from '../../validation.ts';
 import * as auth from '../../auth.ts';
 import cookieParser from 'cookie-parser';
-import z, { ZodError } from 'zod';
+import z, { date, ZodError } from 'zod';
 import bodyParser from 'body-parser';
 import { hashPassword, verifyPassword } from '../../hash.ts';
 
@@ -86,6 +86,7 @@ router
         httpOnly: true,
         sameSite: 'strict',
         secure: process.env.NODE_ENV == 'production',
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       });
     } catch (err) {
       if (err instanceof ZodError) {
