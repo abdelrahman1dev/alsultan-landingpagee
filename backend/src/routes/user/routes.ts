@@ -20,8 +20,8 @@ router
       const data = req.body;
       validation.signupSchema.parse(data);
 
-      const existingUser = await db.getUserByEmail(data.email);
-      if (existingUser) {
+      const userExists: boolean = await db.isUserFound(data.email);
+      if (userExists) {
         return res.status(400).json({
           message: 'User already exists',
         });
@@ -125,17 +125,16 @@ router.route('/me').get(async (req: Request, res: Response) => {
       return res.status(500).json({ message: 'Email not found in token' });
     }
 
-    const user: db.User | null = await db.getUserByEmail(payload.email);
+    const user: db.User = await db.getUserByEmail(payload.email);
     if (user?.passwordHash) {
       user.passwordHash = '';
     }
 
-    if (!user) {
-      return res.status(500).json({ message: 'User not found' });
-    }
-
     return res.status(200).json(user);
   } catch (err: any) {
+    if (err instanceof db.RowNotFoundError) {
+      res.status(404).json({ message: 'User not found' });
+    }
     return res.status(500).send();
   }
 });

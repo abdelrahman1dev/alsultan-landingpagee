@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route('/').get(async (req: Request, res: Response) => {
   try {
-    const courses = await db.getAllCourses();
+    const courses: db.Course[] = await db.getAllCourses();
     return res
       .status(200)
       .json({ message: 'Courses retrieval successful', data: courses });
@@ -25,14 +25,15 @@ router.route('/:courseId').get(async (req: Request, res: Response) => {
     if (/^\d+$/.test(courseId) === false) {
       return res.status(401).json({ message: 'Invalid course ID paramater' });
     }
-    const course: db.Course | null = await db.getCourseById(Number(courseId));
-    if (!course) {
-      return res.status(400).json({ message: 'Course not found' });
-    }
+    const course: db.Course = await db.getCourseById(Number(courseId));
 
     return res.status(200).json({ message: 'Found course', data: course });
   } catch (err: any) {
     console.log(err);
+
+    if (err instanceof db.RowNotFoundError) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
     return res.status(500).send();
   }
 });
@@ -47,18 +48,18 @@ router.route('/:courseId/lectures').get(async (req: Request, res: Response) => {
     if (/^\d+$/.test(courseId) === false) {
       return res.status(401).json({ message: 'Invalid course ID paramater' });
     }
-    const course: db.Course | null = await db.getCourseById(Number(courseId));
-    if (!course) {
-      return res.status(400).json({ message: 'Course not found' });
-    }
 
-    const lectures = await db.getCourseLectures(Number(courseId));
+    const lectures: db.Lecture[] = await db.getCourseLectures(Number(courseId));
 
     return res
       .status(200)
       .json({ message: 'Found course lectures', data: lectures });
   } catch (err: any) {
     console.log(err);
+
+    if (err instanceof db.RowNotFoundError) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
     return res.status(500).send();
   }
 });
