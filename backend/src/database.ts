@@ -34,6 +34,8 @@ const db = new Pool({
 
 export type User = z.infer<typeof validation.userSchema>;
 export type Course = z.infer<typeof validation.courseSchema>;
+export type Lecture = z.infer<typeof validation.lectureSchema>;
+export type LectureVideo = z.infer<typeof validation.lectureVideoSchema>;
 
 export async function getImageLink(name: string): Promise<string | null> {
   const query = 'SELECT * FROM image_links WHERE name = $1';
@@ -95,7 +97,7 @@ export async function insertUser(user: User) {
   await db.query(query, values);
 }
 
-export async function getCourseById(id: number) {
+export async function getCourseById(id: number): Promise<Course> {
   const query = 'SELECT * FROM courses WHERE id = $1';
   const values = [id];
 
@@ -114,7 +116,7 @@ export async function getCourseById(id: number) {
   return row;
 }
 
-export async function getAllCourses() {
+export async function getAllCourses(): Promise<Course[]> {
   const query = 'SELECT * FROM courses';
 
   const res = await db.query(query);
@@ -125,7 +127,7 @@ export async function getAllCourses() {
   return res.rows;
 }
 
-export async function getCourseLectures(courseId: number) {
+export async function getCourseLectures(courseId: number): Promise<Lecture[]> {
   const query = 'SELECT * FROM lectures WHERE course_id=$1';
   const values = [courseId];
 
@@ -137,7 +139,9 @@ export async function getCourseLectures(courseId: number) {
   return res.rows;
 }
 
-export async function getLectureVideos(lectureId: number) {
+export async function getLectureVideos(
+  lectureId: number,
+): Promise<LectureVideo[]> {
   const query = 'SELECT * FROM lecture_videos WHERE lecture_id=$1';
   const values = [lectureId];
 
