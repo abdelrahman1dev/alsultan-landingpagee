@@ -17,6 +17,13 @@ export class NonUniqueDataError extends DataIntegrityError {
   }
 }
 
+export class RowNotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'RowNotFoundError';
+  }
+}
+
 const db = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -50,11 +57,11 @@ export async function getUserByEmail(email: string): Promise<User | null> {
   if (res.rowCount && res.rowCount > 1) {
     throw new NonUniqueDataError(res.rowCount);
   }
+  if (res.rowCount == 0) {
+    throw new RowNotFoundError(`User with email ${email} was not found`);
+  }
 
   const row = res.rows[0];
-  if (!row) {
-    return null;
-  }
 
   const user: User = {
     id: row.id,
@@ -96,11 +103,11 @@ export async function getCourseById(id: number) {
   if (res.rowCount && res.rowCount > 1) {
     throw new NonUniqueDataError(res.rowCount);
   }
+  if (res.rowCount == 0) {
+    throw new RowNotFoundError(`Course with ID ${id} not found`);
+  }
 
   const row = res.rows[0];
-  if (!row) {
-    return null;
-  }
 
   validation.courseSchema.parse(row);
 
