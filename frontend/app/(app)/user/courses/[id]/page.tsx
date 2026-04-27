@@ -23,7 +23,7 @@ export default async function CoursePage({
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="flex flex-row-reverse items-center justify-between">
-        <BackButton />
+        <BackButton route="/user/courses" />
         <h1 className="text-3xl font-bold my-4">{course.title}</h1>
       </div>
       <CourseImage title={course.title} />

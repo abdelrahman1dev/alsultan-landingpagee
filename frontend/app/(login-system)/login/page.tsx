@@ -6,7 +6,7 @@ import { Cairo } from 'next/font/google';
 import { FormEvent } from 'react';
 import { toast } from 'sonner';
 import { api } from '../../(marketing)/hooks/api';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -18,6 +18,8 @@ const cairo = Cairo({
 function page() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/user';
 
   const onsubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +34,7 @@ function page() {
 
       toast.success('تم الدخول بنجاح!');
 
-      router.push('/user');
+      router.push(redirect);
     } catch (err: any) {
       console.error(err);
 
